@@ -1,0 +1,199 @@
+<!--
+  Generated template for the LoyaltyInfluencerDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title *ngIf="type==3">Distributor Detail</ion-title>
+    <ion-title *ngIf="type==2">Retailer Detail</ion-title>
+
+
+  </ion-navbar>
+
+  <ion-toolbar class="custom-toolbar-height">
+    <div class="ion-tab-btn ">
+      <ion-segment [(ngModel)]="detail">
+        <ion-segment-button value="basic" (click)="getinfluencerDetail()">
+          <span class="black capitalize f12">{{ 'Basic Detail'}}</span>
+        </ion-segment-button>
+        <ion-segment-button value="purchase" (click)="getpurchaseDetail()">
+          <span class="black capitalize f12">{{'Purchase Detail'}} ({{tabCount?tabCount:'0'}})</span>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content>
+
+  <div [ngSwitch]=detail>
+    <ng-container *ngSwitchCase="'basic'">
+
+      <div class="profile-container">
+        <div class="padding16">
+          <div class="profile-card">
+
+            <div class="text-box">
+              <p>{{'Company Name' }}.</p>
+              <h6>{{influencerDetail.company_name |titlecase}}</h6>
+          </div>
+            <div class="text-box">
+                <p>{{ 'Name' }}.</p>
+                <h6>{{influencerDetail.name |titlecase}}</h6>
+            </div>
+            <div class="text-box">
+                <p>{{ 'Mobile No' }}.</p>
+                <h6>{{influencerDetail.mobile_no}}</h6>
+            </div>
+            <!-- <div class="text-box" *ngIf="influencerDetail.type==8">
+                <p>{{ 'Paytm Mobile No.' }}.</p>
+                <h6>{{influencerDetail.paytm_mobile_no || '--'}}</h6>
+            </div> -->
+            <div class="text-box" *ngIf="influencerDetail.type==2">
+                <p>{{ 'KYC Status' }}.</p>
+                <h6 class="{{influencerDetail.kyc_status}}">{{influencerDetail.kyc_status || '--'}}</h6>
+            </div>
+            <div class="text-box" *ngIf="influencerDetail.email">
+                <p>{{ 'Email ID' }}</p>
+                <h6>{{influencerDetail.email}}</h6>
+            </div>
+            <div class="text-box" *ngIf="influencerDetail.gst_number">
+                <p>{{ 'GST No.' }}</p>
+                <h6>{{influencerDetail.gst_number}}</h6>
+            </div>
+            <div class="text-box">
+                <p>{{ 'Date of Birth'}}</p>
+                <h6>{{(influencerDetail.dob !='0000-00-00') ? (influencerDetail.dob| date:'d MMM,y'):('----')}}</h6>
+            </div>
+            <div class="text-box">
+                <p>{{ 'Date of Anniversary'}}</p>
+                <h6>{{(influencerDetail.doa !='0000-00-00') ? (influencerDetail.doa| date:'d MMM,y'):('----')}}</h6>
+            </div>
+            <div class="text-box">
+                <p>{{ 'Address'}}</p>
+                <h6>{{influencerDetail.address |titlecase}} {{influencerDetail.state |titlecase}}
+                    {{influencerDetail.district |titlecase}} {{influencerDetail.city |titlecase}}
+                    {{influencerDetail.pincode}}</h6>
+            </div>
+  
+        </div>
+  
+        </div>
+
+      </div>
+     
+
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'purchase'">
+
+      <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+        refreshingText="Refreshing...">
+      </ion-refresher-content>
+    </ion-refresher>
+    
+    
+    
+    <div class="nothing-here" *ngIf="!purchaseList.length && requestSend">
+      <div class="outer">
+        <div class="innear">
+          <img src="assets/imgs/no_found.svg" alt="">
+          <p>No data Found</p>
+        </div>
+      </div>
+    </div>
+      <div class="pd-left-right16 mt16 mb100">
+        <div class="attendance-list" *ngFor="let row of purchaseList;let i=index">
+          <div class="slab slab-bg" (click)="go_to_Purchase_detail(row.id)">
+            <div class="slab-day">
+              <p>{{row.date_created | date:'d MMMM y'}}</p>
+              <span>Date Created</span>
+            </div>
+            <div class="slab-day">
+              <p>{{row.bill_date | date:'d MMMM y'}}</p>
+              <span>Bill Date</span>
+            </div>
+            <div class="slab-day">
+              <p>{{row.pur_id}}</p>
+            </div>
+          </div>
+        
+          <div class="center-block" (click)="go_to_Purchase_detail(row.id)" *ngIf="type==3">
+            <div class="circle">{{row.retailer_company_name?.substring(0,1).toUpperCase()}}</div>
+            <h1 class="f12">{{row.retailer_company_name?.toUpperCase()}}</h1>
+            <p>{{row.retailer_name | titlecase}} ({{row.retailer_mobile}})</p>
+            <a class="cell-phone" href="tel:{{row.retailer_mobile}}"><i class="material-icons">phone</i></a>
+            <div class="next-forword">
+              <i class="material-icons">chevron_right</i>
+            </div>
+          </div>
+      
+          <div class="center-block" (click)="go_to_Purchase_detail(row.id)" *ngIf="type==2 ">
+            <div class="circle">{{row.distributor_company_name?.substring(0,1).toUpperCase()}}</div>
+            <h1 class="f12">{{row.distributor_company_name?.toUpperCase()}}</h1>
+            <p>{{row.distributor_name | titlecase}} ({{row.distributor_mobile}})</p>
+            <a class="cell-phone" href="tel:{{row.distributor_mobile}}"><i class="material-icons">phone</i></a>
+            <div class="next-forword">
+              <i class="material-icons">chevron_right</i>
+            </div>
+          </div>
+          
+          <div class="other-block" (click)="go_to_Purchase_detail(row.id)">
+            <!-- <p *ngIf="type==3">{{'Assign Distributor' }} :<strong>{{row.distributor_company_name | titlecase}}({{row.distributor_mobile}})</strong></p> -->
+            <p>{{'Bill No.' }} :<strong>{{row.bill_no}}</strong></p>
+          </div>
+         
+          
+          <div class="slab" (click)="go_to_Purchase_detail(row.id)">
+            <div class="slab-day">
+              <p class="{{row.status}}">{{row.status}}</p>
+              <span>Status</span>
+            </div>
+            
+            <div class="slab-day">
+              <p>{{row.total_qty}}</p>
+              <span>Quantity</span>
+            </div>
+            
+            <div class="slab-day" *ngIf="row.status_updated_by_name">
+              <p>{{row.status_updated_by_name|titlecase}}({{row.sales_user_emp_code}})</p>
+              <span>Status Updated By</span>
+            </div>
+          </div>
+          <div class="other-block" *ngIf=" row.status=='Reject'">
+            <p>
+              <strong>Reason :</strong> {{row.status_reason |titlecase}}
+            </p>
+          </div>
+      
+          <div class="slab slab-bg" *ngIf="row.status=='Approved'">
+            <p>{{'Points' }}: <strong style="font-size: 14px; color: #030a13;">{{row.points}}</strong></p>
+            
+          </div>
+          
+        </div>
+      </div>
+
+
+      <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)"  *ngIf="flag!=1">
+        <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="{{'Loading more data...' }}">
+      </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ng-container>
+  </div>
+
+  
+    
+
+  
+</ion-content>
+
+
+ 

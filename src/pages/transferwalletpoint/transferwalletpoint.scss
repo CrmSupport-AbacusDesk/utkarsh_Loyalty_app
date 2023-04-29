@@ -1,0 +1,29 @@
+page-transferwalletpoint {
+
+    ion-searchbar {
+        padding: 0px 0px !important;
+
+        .searchbar-input {
+            height: 45px   !important;
+            border-radius: 30px;
+            border: 0px;
+            margin-top: 0px !important;
+            text-transform: capitalize;
+            font-size: 12px;
+            letter-spacing: 1px;
+            padding: 10px 16px 10px 35px;
+        }
+
+        .searchbar-input-container {
+            padding-right: 0px !important;
+
+            .searchbar-search-icon {
+                left: 10px;
+                top: 15px;
+                width: 15px;
+                height: 15px;
+            }
+        }
+    }
+
+}

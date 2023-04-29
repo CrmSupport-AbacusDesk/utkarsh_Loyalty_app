@@ -1,0 +1,118 @@
+page-loyalty-purchase-list {
+    .image-detail{height: calc(100% - 100px)};
+
+    .cs-list 
+{
+    background: #fff;
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    
+    .top-block {
+        
+        padding-bottom: 5px;
+        border-bottom: 1px dashed #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        
+        p {
+            font-size: 12px;
+            color: #000;
+            font-weight: 600;
+            
+            span{
+                font-size: 12px;
+            }
+        }
+
+           &.footer-block{
+            border-top: 1px dashed #ccc;
+            padding-top: 5px;
+            border-bottom: 0px;
+            background: #f4f4f4;
+            margin: 0px -10px -10px;
+            padding: 10px;
+        }
+    }
+
+    
+    .middle-block{
+        padding: 5px 0px 0px;
+
+        p{
+            font-size: 11px;
+            line-height: 18px;
+        }
+    }
+    
+    .three-block{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px 0px;
+    }
+    
+   
+    
+    .number-block{
+        p{
+            font-size: 12px;
+            line-height: 20px;
+        }
+    }
+    
+    .botm-block 
+    {
+        margin: 0px -10px -10px;
+        padding: 10px;
+        background: #f2f2f2;
+        
+        p{
+            font-size: 12px;
+            line-height: 18px;
+            
+            ion-icon{
+                font-size: 22px;
+                margin-right: 5px;
+            }
+        }
+    }
+    
+    &:last-child{
+        margin-bottom: 0px;
+    }
+}
+
+
+.ds-block{
+    display: block !important;
+}
+
+.flex-radio{
+    display: flex;
+    grid-column-gap: 10px;
+
+    ion-item{
+        padding-left: 27px !important;
+        font-size: 14px;
+    }
+}
+.textarea{
+    height: 100% !important;
+    padding-left: 10px !important;
+    font-size: 14px !important;
+}
+
+.radio{
+    border-radius: 8px;
+    
+}
+
+.slab{
+    justify-content: space-between;
+}
+
+}

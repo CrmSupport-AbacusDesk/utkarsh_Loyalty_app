@@ -1,0 +1,115 @@
+
+<ion-header no-border>
+  <ion-navbar>
+    <ion-title *ngIf="type == 4">{{'Retailer List' }}</ion-title>
+    <ion-title *ngIf="type == 3">{{'Dealer List' }}</ion-title>
+  </ion-navbar>
+  
+  <ion-toolbar >
+    <div class="search add-search">
+      <div class="filter">
+          <ion-searchbar type='text' name='search_key' [(ngModel)]="filter.search_key" (keyup.enter)="getinfluencerList()">
+          </ion-searchbar>
+      </div>
+  </div>
+
+  <div class="ion-tab-btn mb10 mt15">
+    <!-- <ion-segment [(ngModel)]="activeTab" *ngIf="type == 2">
+      <ion-segment-button  value="Pending" (click)="getinfluencerList()">
+        Pending({{tabCount.pending_count?tabCount.pending_count:'0'}})
+      </ion-segment-button>
+      <ion-segment-button  value="Approved" (click)="getinfluencerList()">
+        Approved({{tabCount.approved_count?tabCount.approved_count:'0'}})
+      </ion-segment-button>
+      <ion-segment-button  value="Reject" (click)="getinfluencerList()">
+        Reject({{tabCount.reject_count?tabCount.reject_count:'0'}})
+      </ion-segment-button>
+    </ion-segment> -->
+
+    <!-- <ion-segment [(ngModel)]="activeTab" *ngIf="type == 3">
+      <ion-segment-button  value="Active" (click)="getinfluencerList()">
+        Active({{tabCount.Active?tabCount.Active:'0'}})
+      </ion-segment-button>
+      <ion-segment-button  value="Inactive" (click)="getinfluencerList()">
+        Inactive({{tabCount.Deactive?tabCount.Deactive:'0'}})
+      </ion-segment-button>
+     
+    </ion-segment> -->
+  </div>
+</ion-toolbar>
+  
+</ion-header>
+
+<ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+        refreshingText="Refreshing...">
+    </ion-refresher-content>
+</ion-refresher>
+
+<div class="nothing-here" *ngIf="!influencerList.length">
+  <div class="outer">
+      <div class="innear">
+          <img src="assets/imgs/no_found.svg" alt="">
+          <p>No data Found</p>
+      </div>
+  </div>
+</div>
+
+  <div class="attendance-list" *ngFor="let row of influencerList;let i=index">
+    <div class="slab slab-bg">
+      <div class="slab-day">
+        <p>{{row.date_created | date:'d MMMM y'}}</p>
+        <span>Date Created</span>
+      </div>
+    
+      <div class="slab-day">
+        <p>{{row.created_by_type}}</p>
+        <span>Created By</span>
+
+      </div>
+    </div>
+  
+    <div class="center-block">
+      <div class="circle">{{row.company_name?.substring(0,1).toUpperCase()}}</div>
+      <h1 class="f12">{{row.company_name?.toUpperCase()}}</h1>
+      <p>{{row.name | titlecase}} ({{row.mobile_no}})</p>
+      <a class="cell-phone" href="tel:{{row.mobile_no}}"><i class="material-icons">phone</i></a>
+      <!-- <div class="next-forword">
+        <i class="material-icons">chevron_right</i>
+      </div> -->
+    </div>
+    <!-- <div class="slab mt10" (click)="goToDetail(row.id)" *ngIf="type==2">
+      <div class="slab-day">
+        <p class="{{row.status}}">{{row.status}}</p>
+        <span>Status</span>
+      </div>
+
+      <div class="slab-day">
+        <p class="{{row.kyc_status}}">{{row.kyc_status}}</p>
+        <span>KYC Status</span>
+      </div>
+    </div> -->
+
+    <div class="other-block">
+        <p  *ngIf=" row.address  || row.state  || row.district  || row.city || row.pincode"><span>{{'Address' }}. :</span> <strong> {{row.address | titlecase}} {{row.city |titlecase}} {{row.district}} {{row.state }} ({{row.pincode}})</strong> </p>
+  </div>
+    
+    <!-- <div class="other-block" *ngIf=" row.status=='Reject' && activeTab=='Reject'">
+      <p>
+        <strong>Reason :</strong> {{row.status_reason |titlecase}}
+      </p>
+    </div> -->
+  </div>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)"  *ngIf="flag!=1">
+    <ion-infinite-scroll-content
+    loadingSpinner="bubbles"
+    loadingText="{{'Loading more data...' }}">
+  </ion-infinite-scroll-content>
+</ion-infinite-scroll>
+
+
+</ion-content>
+
+
+
