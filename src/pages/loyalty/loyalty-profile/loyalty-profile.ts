@@ -199,7 +199,7 @@ export class LoyaltyProfilePage {
     if (this.karigar_detail.referral_code != "") {
       this.ref_code = ' and use my Code *' + this.karigar_detail.referral_code + '* to get points back in your wallet'
     }
-    this.socialSharing.share('Hey There ! here is an awesome app from Pearl Precision   ..Give it a try https://play.google.com/store/apps/details?id=com.utkarshindia.com ' + this.ref_code).then(() => {
+    this.socialSharing.share('Hey There ! here is an awesome app from Utkarsh India   ..Give it a try https://play.google.com/store/apps/details?id=com.utkarshindia.com ' + this.ref_code).then(() => {
     }).catch((e) => {
       this.service.errorToast('Something Went wrong , Please Try Again Later')
     });

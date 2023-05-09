@@ -44,7 +44,7 @@
     </div>
     
     
-    <ng-container *ngIf="influencer_point.kyc_status != 'Verified'">
+    <ng-container *ngIf="influencer_point.kyc_status != 'Verified' ">
       <div class="error-bg" [ngClass]="{'kyc-pending': influencer_point.kyc_status == 'Pending', 'kyc-reject': influencer_point.kyc_status == 'Reject'}">
         Your KYC status is {{influencer_point.kyc_status}}. After KYC is Verified send redeem request. For more information contact us at {{contact.contact_number}}
       </div>

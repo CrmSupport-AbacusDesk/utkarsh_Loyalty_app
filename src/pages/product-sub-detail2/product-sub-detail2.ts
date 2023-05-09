@@ -27,7 +27,7 @@ export class ProductSubDetail2Page {
   active_image: any = ''
   user_data: any = {};
   userType: any
-  company_name: any = 'PEARL PRECISION PRODUCTS PVT. LTD.'
+  company_name: any = 'UTKARSH INDIA LTD.'
   image_url: any = ''
   share_image: any;
   
