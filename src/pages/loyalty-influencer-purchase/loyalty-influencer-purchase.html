@@ -1,0 +1,131 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title *ngIf="type==3">{{ 'Distributor Purchase Detail'  }}</ion-title>
+    <ion-title *ngIf="type==2">{{ 'Retailer Purchase Detail'  }}</ion-title>
+    
+  </ion-navbar>
+</ion-header>
+
+
+
+<ion-content>
+  <div class="attendance-list flat-list">
+    <div class="slab slab-bg">
+      
+      <div class="slab-day">
+        <p>{{conDetail.pur_id }}</p>
+      </div>
+      <div class="slab-day">
+        <p>{{conDetail.date_created |date:'d MMMM y' }}</p>
+        <span>Date Created</span>
+      </div>
+      
+      <div class="slab-day">
+        <p>{{conDetail.bill_date |date:'d MMMM y'}}</p>
+        <span>Bill Date</span>
+      </div>
+    </div>
+    <div class="center-block"  *ngIf="type==2" >
+      <div class="circle">{{conDetail.distributor_company_name ?.toUpperCase()| slice:0:1}}</div>
+      <h1 class="f12">{{conDetail.distributor_company_name ?.toUpperCase()}}</h1>
+      <p>{{conDetail.distributor_name | titlecase}} ({{conDetail.distributor_mobile}})</p>
+      <a class="cell-phone" href="tel:{{conDetail.distributor_mobile}}"><i class="material-icons">phone</i></a>
+    </div>
+    
+    <div class="center-block" *ngIf="type==3">
+      <div class="circle">{{conDetail.retailer_company_name ?.toUpperCase()| slice:0:1}}</div>
+      <h1 class="f12">{{conDetail.retailer_company_name ?.toUpperCase()}}</h1>
+      <p>{{conDetail.retailer_name | titlecase}} ({{conDetail.retailer_mobile}})</p>
+      <a class="cell-phone" href="tel:{{conDetail.retailer_mobile}}"><i class="material-icons">phone</i></a>
+    </div>
+    <div class="other-block">
+      <!-- <p  *ngIf="type==3"><strong> Assign Distributor:</strong> {{conDetail.distributor_company_name |titlecase}}({{conDetail.distributor_mobile}})</p> -->
+      <p><strong>Bill No. :</strong> {{conDetail.bill_no}}</p>
+      
+    </div>
+    <div class="slab">
+      <div class="slab-day">
+        <p class="{{conDetail.status}}">{{conDetail.status}}</p>
+        <span>Status</span>
+      </div>
+      
+      <div class="slab-day" *ngIf="conDetail.status=='Approved'">
+        <p>{{conDetail.points}}</p>
+        <span>Points </span>
+        
+        
+      </div>
+      
+      <div class="slab-day" *ngIf="conDetail.status_updated_by_name">
+        <p>{{conDetail.status_updated_by_name |titlecase}} ({{conDetail.sales_user_emp_code}})</p>
+        <span>Status Updated By</span>
+      </div>
+    </div>
+    
+    <div class="other-block" *ngIf=" conDetail.status=='Reject'">
+      <p >
+        <strong>Reason :</strong> {{conDetail.status_reason |titlecase}}
+      </p>
+    </div>
+    
+    
+    
+  </div>
+  
+  <div class="pl16 pr16 mb16">
+    <div class="border-container mt16">
+      <div class="summary-heading">Item Detail</div>
+      
+      <div class="payment-box">
+        <div class="credit-table">
+          <table>
+            <tr>
+              <td class="text-left">Product Detail</td>
+              <td class="text-left">Qty </td>
+            </tr>
+            <tr *ngFor="let row of conDetail.parts">
+              <th>{{row.product_detail | titlecase}}</th>
+              <th>{{row.qty }}</th>
+              
+            </tr>
+          </table>
+        </div>
+      </div>
+      
+      
+      
+    </div>
+    <div class="border-container mt16">
+      <div class="summary-heading">Bill Image</div>
+      <ng-container>
+        <div class="upload-doc mt10">
+          <ul class="no-padding">
+            
+            <li class="image-upload" *ngFor="let row of conDetail.image" (click)="imageModal(upload_url + row.image)">
+              <img src="{{upload_url + row.image}}">
+              
+            </li>
+          </ul>
+          
+        </div>
+        
+        
+      </ng-container>
+    </div>
+    
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</ion-content>
+

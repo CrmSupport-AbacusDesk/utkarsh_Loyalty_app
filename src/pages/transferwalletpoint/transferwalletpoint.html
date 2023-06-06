@@ -1,0 +1,47 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>Transfer Wallet Point</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="my-wallet flat">
+    <div class="pts-icon">
+      <i class="material-icons">account_balance_wallet </i>
+      Transfer Wallet Points
+    </div>
+    <div class="pts">
+      {{pointRight.plumber_transfer_point ?pointRight.plumber_transfer_point :'0'}}
+    </div>
+  </div>
+  <div class="mt40">
+    <ion-searchbar  type='tel' placeholder="Mobile No." (keypress)="MobileNumber($event)"  name='search' [(ngModel)]="filter.search" (ionClear)="getDatafalse()" (input)="getData()">
+    </ion-searchbar>
+  </div>
+  
+  <div class="nothing-here" *ngIf="!filter.search">
+    <div class="outer">
+      <div class="innear">
+        <img src="assets/imgs/search-plumber.png" alt="">
+        <h1 class="f12">Search Plumber Mobile No. For Transfer Point</h1>
+      </div>
+    </div>
+  </div>
+  
+  <div class="attendance-list mt40" *ngIf="plumberData">
+    <div class="center-block">
+      <div class="circle">{{plumberDetail.name?.substring(0,1).toUpperCase()}}</div>
+      <h1 class="f12">Name : {{plumberDetail.name | titlecase}}</h1>
+      <h1 class="f12">Mobile : {{plumberDetail.mobile_no}}</h1>
+    </div>
+    <div class="other-block">
+      <p>
+        <strong>Address :</strong>{{plumberDetail.address | titlecase}} {{plumberDetail.city |titlecase}} {{plumberDetail.district}} {{plumberDetail.state}} ({{plumberDetail.pincode}}) </p>
+      </div>
+      <button  class="capitalize" ion-button round full (click)="statusModal()"> Transfer Points</button>
+      
+    </div>
+    
+  </ion-content>
+  

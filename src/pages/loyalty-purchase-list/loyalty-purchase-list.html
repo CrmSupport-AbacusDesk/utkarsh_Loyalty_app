@@ -1,0 +1,191 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title *ngIf="type!=3" >Puchase List</ion-title>
+    <ion-title *ngIf="type==3" >{{purchaseType}} Puchase List</ion-title>
+
+    
+  </ion-navbar>
+  
+  
+  <ion-toolbar > 
+    <div class="search add-search">
+      <div class="filter">
+        <ion-searchbar type='text' name='search_key' [(ngModel)]="filter.search_key" (keyup.enter)="getrequest()">
+        </ion-searchbar>
+      </div>
+    </div>
+    
+
+    <div class="ion-tab-btn mb10 mt15" *ngIf="type!=1">
+      <ion-segment [(ngModel)]="influencerPurchase">
+        <ion-segment-button  value="My" (click)="getrequest()"  *ngIf="type==2 || type==4">
+          My  
+        </ion-segment-button>
+        <ion-segment-button  value="Dealer" (click)="getrequest()" *ngIf="type==3">
+          Dealer  
+        </ion-segment-button>
+        <ion-segment-button  value="Retailer" (click)="getrequest()"  *ngIf="type!=2 && type!=3">
+          Retailer  
+        </ion-segment-button>
+        <ion-segment-button  value="Plumber" (click)="getrequest()">
+          Plumber 
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+  
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+    refreshingText="Refreshing...">
+  </ion-refresher-content>
+</ion-refresher>
+
+<div class="sticky bg-white">
+
+  <div class="capsule-tabs">
+    <ul>
+      <li [ngClass]="{'active':activeTab == 'Pending'}" (click)="activeTab = 'Pending';getrequest()">
+        <p>Pending <span>{{tabCount.pending_count?tabCount.pending_count:'0'}}</span></p>
+      </li>
+      <li [ngClass]="{'active':activeTab == 'Approved'}" (click)="activeTab = 'Approved';getrequest()">
+        <p>Approved <span>{{tabCount.approved_count?tabCount.approved_count:'0'}}</span></p>
+      </li>
+      <li [ngClass]="{'active':activeTab == 'Reject'}" (click)="activeTab = 'Reject';getrequest()">
+        <p>Reject <span>{{tabCount.reject_count?tabCount.reject_count:'0'}}</span></p>
+      </li>
+     
+    </ul>
+  </div>
+</div>
+
+
+<div class="nothing-here" *ngIf="!requestList.length && requestSend">
+  <div class="outer">
+    <div class="innear">
+      <img src="assets/imgs/no_found.svg" alt="">
+      <p>No data Found</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="pd-left-right16 mt16 mb100">
+  <div class="attendance-list" *ngFor="let row of requestList;let i=index">
+    <div class="slab slab-bg" (click)="go_to_Purchase_detail(row.id)">
+      <div class="slab-day">
+        <p>{{row.date_created | date:'d MMMM y'}}</p>
+        <span>Date Created</span>
+      </div>
+      <div class="slab-day">
+        <p>{{row.bill_date | date:'d MMMM y'}}</p>
+        <span>Bill Date</span>
+      </div>
+      <div class="slab-day">
+        <p>{{row.pur_id}}</p>
+      </div>
+    </div>
+    
+    <div class="center-block" (click)="go_to_Purchase_detail(row.id)"  *ngIf=" influencerPurchase!='Plumber'">
+      <div class="circle">{{row.company_name?.substring(0,1).toUpperCase()}}</div>
+      <h1 class="f12">{{row.company_name?.toUpperCase()}}</h1>
+      <p>{{row.name | titlecase}} ({{row.mobile_no}})</p>
+      <a class="cell-phone" href="tel:{{row.mobile_no}}"><i class="material-icons">phone</i></a>
+      <div class="next-forword">
+        <i class="material-icons">chevron_right</i>
+      </div>
+    </div>
+    <div class="center-block" (click)="go_to_Purchase_detail(row.id)"  *ngIf=" influencerPurchase=='Plumber'">
+      <div class="circle">{{row.name?.substring(0,1).toUpperCase()}}</div>
+      <h1 class="f12">{{row.name?.toUpperCase()}}</h1>
+      <p>Mobile No. : {{row.mobile_no}}</p>
+      <a class="cell-phone" href="tel:{{row.mobile_no}}"><i class="material-icons">phone</i></a>
+      <div class="next-forword">
+        <i class="material-icons">chevron_right</i>
+      </div>
+    </div>
+
+    
+    <div class="other-block" (click)="go_to_Purchase_detail(row.id)">
+      <p>{{'Bill No.' }} :<strong>{{row.bill_no}}</strong></p>
+      <p *ngIf="row.status_updated_by_name">{{'Status Updated By' }} :<strong>{{row.status_updated_by_name|titlecase}} -({{row.status_updated_by_mobile}})</strong></p>
+
+    </div>
+    
+    
+    <div class="slab mb8" (click)="go_to_Purchase_detail(row.id)">
+      <div class="slab-day">
+        <p class="{{row.status}}">{{row.status}}</p>
+        <span>Status</span>
+      </div>
+      
+      <div class="slab-day">
+        <p>{{row.bill_amount}}</p>
+        <span>Bill Amount</span>
+      </div>
+      
+      <!-- <div class="slab-day" *ngIf="row.status_updated_by_name">
+        <p>{{row.status_updated_by_name|titlecase}} -({{row.status_updated_by_mobile}}) </p>
+        <span>Status Updated By</span>
+      </div> -->
+    </div>
+    <div class="other-block" *ngIf=" row.status=='Reject' && activeTab=='Reject'">
+      <p >
+        <strong>Reason :</strong> {{row.status_reason |titlecase}}
+      </p>
+    </div>
+    
+    <div class="top-block footer-block ds-block" *ngIf="influencerPurchase!='My' && activeTab=='Pending' && row.status == 'Pending' && type!=1" >
+      <ion-list no-lines class="flex-radio m0 " radio-group [name]="'purchase_status'+i"  [(ngModel)]="row.purchase_status">
+        <div class="slab slab-bg" style="width: 100%;">
+          <ion-item class="radio">
+            <ion-radio value="Approved" ></ion-radio>
+            <ion-label class="Approved">{{'Approved'}}</ion-label>
+          </ion-item>
+          <ion-item class="radio">
+            <ion-radio value="Reject" ></ion-radio>
+            <ion-label class="Reject">{{'Reject'}}</ion-label>
+          </ion-item>
+        </div>
+      </ion-list>
+      <div class="form padding0 mb15">
+        <ion-list no-lines>
+          <ion-item class="cs-input" *ngIf="row.purchase_status == 'Approved'">
+            <ion-label floating>{{'Points'}}<span>*</span></ion-label>
+            <ion-input type="tel"  name="transfer_points" #transfer_points="ngModel" [(ngModel)]="row.transfer_points" required></ion-input>
+          </ion-item>
+          <ion-item *ngIf="row.purchase_status == 'Reject'">
+            <ion-label floating>Reason<span>*</span></ion-label>
+            <ion-textarea name="reason" #reason="ngModel" [(ngModel)]="row.reason" required></ion-textarea>
+          </ion-item>
+        </ion-list>
+      </div>
+      <button class="capitalize"  *ngIf="row.purchase_status" (click)="updateStatus(row.id, row.purchase_status, row.reason,row.transfer_points)" [disabled]="saveFlag" ion-button round full><ion-spinner *ngIf="spinner == true"></ion-spinner>{{'Update'}}</button>
+    </div>
+    
+    <div class="slab slab-bg" *ngIf="row.status=='Approved'">
+      <p *ngIf="influencerPurchase=='My'">{{'Points Earned' }}: <strong style="font-size: 14px; color: #030a13;">{{row.points}}</strong></p>
+      <!-- <p *ngIf="userId"> {{'Points Transfer' }}: <strong style="font-size: 14px; color: #030a13;">{{row.points}}</strong></p> -->
+      <p *ngIf="influencerPurchase!='My'"> {{'Points Deduct' }}: <strong style="font-size: 14px; color: #030a13;">{{row.points}}</strong></p>
+      
+    </div>
+    
+  </div>
+</div>
+
+
+<ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)"  *ngIf="flag!=1">
+  <ion-infinite-scroll-content
+  loadingSpinner="bubbles"
+  loadingText="{{'Loading more data...' }}">
+</ion-infinite-scroll-content>
+</ion-infinite-scroll>
+<ion-fab right bottom *ngIf="type!=3">
+  <button ion-fab color="primary" (click)="goOnAddpurchase()">
+    <ion-icon name="add"></ion-icon>
+  </button>
+</ion-fab>
+
+</ion-content>
