@@ -15,7 +15,7 @@ export class LoyaltyGiftGalleryPage {
   filter: any = {};
   id: any = '';
   gift_list: any = [];
-  balance_point: any = '';
+  // balance_point: any = '';
   loading: Loading;
   mode: any = '';
   tokenInfo: any = {};
@@ -41,10 +41,11 @@ export class LoyaltyGiftGalleryPage {
   ionViewWillEnter() {
   }
 
-  goOnGiftDetail(id, gift_type, range) {
+  goOnGiftDetail(id, gift_type, range,gift_point) {
+
     if (gift_type == 'Cash') {
       if(parseFloat(range) > parseFloat(this.influencer_point)){
-        this.service.errorToast('you are not eligible for this gift');
+        this.service.errorToast('You Are Not Eligible For This Gift');
         return
       }
       else{
@@ -52,9 +53,22 @@ export class LoyaltyGiftGalleryPage {
       }
 
     }
-    else {
-      this.navCtrl.push(LoyaltyGiftGalleryDetailPage, { 'id': id })
+    else if(gift_type == 'Gift'){
+
+      if(parseFloat(gift_point) > parseFloat(this.influencer_point)){
+        this.service.errorToast('You Are Not Eligible For This Gift');
+        return
+      }
+      else{
+        this.navCtrl.push(LoyaltyGiftGalleryDetailPage,{'id':id})
+      }
+
+
     }
+    // else {
+
+    //   this.navCtrl.push(LoyaltyGiftGalleryDetailPage, { 'id': id })
+    // }
 
 
   }

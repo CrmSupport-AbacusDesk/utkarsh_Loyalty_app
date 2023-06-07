@@ -5,6 +5,7 @@ import { IonicSelectableComponent } from 'ionic-selectable';
 import { ConstantProvider } from '../../providers/constant/constant';
 import { MyserviceProvider } from '../../providers/myservice/myservice';
 import { LoyaltyPurchaseListPage } from '../loyalty-purchase-list/loyalty-purchase-list';
+import { RegistrationPage } from '../login-section/registration/registration';
 
 /**
 * Generated class for the LoyaltyAddPurchasePage page.
@@ -60,10 +61,14 @@ export class LoyaltyAddPurchasePage {
         this.getnetworklist('') 
        }
       this.categoryList();
+
       
     }
     
     ionViewDidLoad() {
+    }
+    ionViewWillEnter(){
+      this.influencerDetail();
     }
     
     
@@ -139,6 +144,23 @@ export class LoyaltyAddPurchasePage {
         this.serve.dismissLoading();
         this.serve.errorToast('Something went wrong')
       });
+    }
+
+    influencer_detail:any={};
+    influencerDetail() {
+      this.serve.addData({ dr_id: this.constant.UserLoggedInData.id, type: this.constant.UserLoggedInData.type }, 'login/login_data').then((res) => {
+        if (res['statusCode'] == 200) {
+          this.influencer_detail = res['loginData']['login_data'];
+        
+        }
+         else {
+          this.serve.errorToast(res['statusMsg'])
+        }
+    
+      }, err => {
+        this.serve.Error_msg(err);
+        this.serve.dismiss();
+      })
     }
     
     
@@ -259,6 +281,8 @@ export class LoyaltyAddPurchasePage {
     }, (err) => {
     });
   }
+
+
   
   fileChange(img) {
     // this.image_data=[];
@@ -277,6 +301,14 @@ export class LoyaltyAddPurchasePage {
       event.preventDefault();
     }
   }
+
+
+  updateDetail() {
+    this.influencer_detail.edit_profile = 'edit_profile';
+    this.navCtrl.push(RegistrationPage, { 'data': this.influencer_detail, "mode": 'edit_page' })
+  }
+
+
   showLimit() {
     let alert = this.alertCtrl.create({
       title: 'Alert',

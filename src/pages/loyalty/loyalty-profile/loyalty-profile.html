@@ -52,7 +52,7 @@
                         <p>{{ 'Paytm Mobile No.' }}.</p>
                         <h6>{{karigar_detail.paytm_mobile_no || '--'}}</h6>
                     </div> -->
-                    <div class="text-box" *ngIf="karigar_detail.type==2">
+                    <div class="text-box" *ngIf="karigar_detail.type!=3">
                         <p>{{ 'KYC Status' }}.</p>
                         <h6 class="{{karigar_detail.kyc_status}}">{{karigar_detail.kyc_status || '--'}}</h6>
                     </div>
@@ -116,7 +116,7 @@
                     <div class="profile-card"
                     *ngIf="karigar_detail.document_image && karigar_detail.document_image_back && karigar_detail.adhar_no && karigar_detail.type!=3 ">
                     <div class="text-center">
-                        <h2>Document Information</h2>
+                        <h2>Aadhar Information</h2>
                     </div>
                     <div class="text-box">
                         <div class="doc-box">
@@ -128,7 +128,7 @@
                         </div>
                     </div>
                     <div class="text-box">
-                        <p>Document number</p>
+                        <p>Aadhar number</p>
                         <h6>{{karigar_detail.adhar_no}}</h6>
                     </div>
                 </div>

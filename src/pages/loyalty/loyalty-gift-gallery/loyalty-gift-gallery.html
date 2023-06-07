@@ -19,8 +19,8 @@
 
   </div>
   <ng-container *ngFor="let list of gift_list; let i=index">
-    <div class="gift-item" [ngClass]="{'inactive': intVal(list.range_start) > intVal(influencer_point)}"
-      (click)="goOnGiftDetail(list.id, list.gift_type, list.range_start)">
+    <div class="gift-item" [ngClass]="{'inactive': intVal(list.range_start) > intVal(influencer_point) || intVal(list.gift_point) > intVal(influencer_point)}"
+      (click)="goOnGiftDetail(list.id, list.gift_type, list.range_start,list.gift_point)">
       <div class="top-items">
         <div class="gift-img">
           <img src="{{uploadUrl+list.gift_img}}" *ngIf="list.gift_type == 'Gift' && !list.gift_img==''">

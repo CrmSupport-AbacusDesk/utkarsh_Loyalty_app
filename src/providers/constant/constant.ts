@@ -59,20 +59,20 @@ export class ConstantProvider {
 
     //Live URL //
 
-
-    public rootUrl2: string ='https://apps.basiq360.com/utkarshindia/api/index.php/'
-    public rootUrl: string =  'https://apps.basiq360.com/utkarshindia/api/index.php/app/'
-    public rootUrl1: string =  'https://apps.basiq360.com/utkarshindia/'
-    public rootUrl3: string =  'https://apps.basiq360.com/utkarshindia/api/index.php/'
-    public rootUrlSfa: string =  'https://apps.basiq360.com/utkarshindia/api/index.php/app/'
+    public rootUrl2: string = 'https://apps.basiq360.com/utkarshindia/api/index.php/'
+    public rootUrl: string = 'https://apps.basiq360.com/utkarshindia/api/index.php/app/'
+    public rootUrl1: string = 'https://apps.basiq360.com/utkarshindia/'
+    public rootUrl3: string = 'https://apps.basiq360.com/utkarshindia/api/index.php/'
+    public rootUrlSfa: string = 'https://apps.basiq360.com/utkarshindia/api/index.php/app/'
     public server_url: string = this.rootUrl1 + 'index.php/app/';
     public upload_url: string = this.rootUrl1 + 'uploads/';
     public upload_url1: string = 'https://apps.basiq360.com/utkarshindia/api/uploads/';
     public upload_url2: string = 'https://apps.basiq360.com/utkarshindia/uploads/order-invoice/';
-    public img_url: string =  'https://apps.basiq360.com/utkarshindia/api/';
-    public loyaltyUrl: string =  'https://apps.basiq360.com/utkarshindia/api/';
-    public influencer_doc: string =  'https://apps.basiq360.com/utkarshindia/api/uploads/influencer_doc/';
-    public support_url : string ='https://apps.basiq360.com/utkarshindia/api/uploads/support/';
+    public img_url: string = 'https://apps.basiq360.com/utkarshindia/api/';
+    public loyaltyUrl: string = 'https://apps.basiq360.com/utkarshindia/api/';
+    public influencer_doc: string = 'https://apps.basiq360.com/utkarshindia/api/uploads/influencer_doc/';
+    public support_url: string = 'https://apps.basiq360.com/utkarshindia/api/uploads/support/';
+
 
 
 
