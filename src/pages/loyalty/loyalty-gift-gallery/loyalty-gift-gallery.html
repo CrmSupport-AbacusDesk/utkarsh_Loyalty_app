@@ -23,7 +23,7 @@
       (click)="goOnGiftDetail(list.id, list.gift_type, list.range_start)">
       <div class="top-items">
         <div class="gift-img">
-          <img src="{{uploadUrl+list.gift_img}}" *ngIf="list.gift_type == 'Gift'">
+          <img src="{{uploadUrl+list.gift_img}}" *ngIf="list.gift_type == 'Gift' && !list.gift_img==''">
           <img src="assets/imgs/cash.png" alt="" *ngIf="list.gift_type == 'Cash'">
         </div>
         <div class="pts">
