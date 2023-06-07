@@ -111,7 +111,6 @@
     <div class="other-block" (click)="go_to_Purchase_detail(row.id)">
       <p>{{'Bill No.' }} :<strong>{{row.bill_no}}</strong></p>
       <p *ngIf="row.status_updated_by_name">{{'Status Updated By' }} :<strong>{{row.status_updated_by_name|titlecase}} -({{row.status_updated_by_mobile}})</strong></p>
-
     </div>
     
     
@@ -150,7 +149,17 @@
           </ion-item>
         </div>
       </ion-list>
-      <div class="form padding0 mb15">
+
+      <ng-container *ngIf="influencer_detail.flag==0 && row.purchase_status && type!=3">
+        <div class="error-bg mt10"  [ngClass]="{'kyc-reject': influencer_detail.flag==0}">
+        <ng-container>
+          Please Update Your KYC!<a class="kyc-reject-text"
+          (click)="updateDetail()"> Update Now</a>
+        </ng-container>
+   
+        </div>
+        </ng-container>
+      <div class="form padding0 mb10" *ngIf="influencer_detail.flag!=0 || type==3 ">
         <ion-list no-lines>
           <ion-item class="cs-input" *ngIf="row.purchase_status == 'Approved'">
             <ion-label floating>{{'Points'}}<span>*</span></ion-label>
@@ -162,7 +171,7 @@
           </ion-item>
         </ion-list>
       </div>
-      <button class="capitalize"  *ngIf="row.purchase_status" (click)="updateStatus(row.id, row.purchase_status, row.reason,row.transfer_points)" [disabled]="saveFlag" ion-button round full><ion-spinner *ngIf="spinner == true"></ion-spinner>{{'Update'}}</button>
+      <button class="capitalize"  *ngIf="(influencer_detail.flag!=0 || type==3 )&& row.purchase_status" (click)="updateStatus(row.id, row.purchase_status, row.reason,row.transfer_points)" [disabled]="saveFlag" ion-button round full><ion-spinner *ngIf="spinner == true"></ion-spinner>{{'Update'}}</button>
     </div>
     
     <div class="slab slab-bg" *ngIf="row.status=='Approved'">

@@ -31,6 +31,7 @@ import { LoyaltyAddPurchasePage } from '../../loyalty-add-purchase/loyalty-add-p
 import { ContractorMeetAddPage } from '../../Contractor-Meet/contractor-meet-add/contractor-meet-add';
 import { LoyaltyPurchaseListPage } from '../../loyalty-purchase-list/loyalty-purchase-list';
 import { LoyaltyInfluencerListPage } from '../../loyalty-influencer-list/loyalty-influencer-list';
+import { RegistrationPage } from '../../login-section/registration/registration';
 
 
 @IonicPage()
@@ -100,6 +101,25 @@ export class LoyaltyHomePage {
           this.influencer_detail = res['loginData']['login_data'];
           this.companyName = res['loginData']['company_name'];
           this.pointRight = res['loginData'];
+          //  if(this.influencer_detail.flag==0 && (this.influencer_detail.type==2 || this.influencer_detail.type==4)){
+          //   let alert = this.alertCtrl.create({
+          //     title: 'Alert',
+          //     subTitle: "Please Update Your KYC!",
+          //     cssClass: 'alert-modal',
+              
+          //     buttons: [{
+          //       text: 'Update',
+          //       handler: () => {
+          //         this.navCtrl.push(RegistrationPage, { 'data': this.influencer_detail, "mode": 'edit_page' })
+
+                  
+          //       }
+          //     }
+          //   ]
+          // });
+          // alert.present();
+
+          //  }
         } else {
           this.skLoading = false
           this.service.errorToast(res['statusMsg'])
@@ -257,8 +277,7 @@ export class LoyaltyHomePage {
     }
 
     goTopurchaselist() {
-
-      if(this.influencer_detail.status!='Approved'){
+      if(this.influencer_detail.status=='Pending'){
         let alertmodal = this.alertCtrl.create({
           // title: 'Sorry!',
           cssClass: 'action-close',
@@ -275,7 +294,43 @@ export class LoyaltyHomePage {
         return
 
       }
-      this.navCtrl.push(LoyaltyPurchaseListPage,{'type':this.influencer_detail.type})
+
+      else if (this.influencer_detail.status == 'Reject') {
+        let alert = this.alertCtrl.create({
+          // title: 'Sorry!',
+          cssClass: 'action-close status-alert',
+          subTitle: "Your current profile status is  <strong class=Reject>“Reject”</strong>. You can see the Purchase only if your profile status is <strong class=Approved>“Approved”</strong>. To know more, you can call us at <a href=tel:1800000000>1800000000</a>",
+          buttons: [
+            {
+              text: 'Okay',
+              handler: () => {
+              }
+            }
+          ]
+        });
+        alert.present();
+        return
+      }
+
+      else if (this.influencer_detail.status == 'Suspect') {
+        let alert = this.alertCtrl.create({
+          // title: 'Sorry!',
+          cssClass: 'action-close status-alert',
+          subTitle: "Your current profile status is  <strong class=Suspect>“Suspect”</strong>. You can see the Purchase only if your profile status is <strong class=Approved>“Approved”</strong>. To know more, you can call us at <a href=tel:1800000000>1800000000</a>",
+          buttons: [
+            {
+              text: 'Okay',
+              handler: () => {
+              }
+            }
+          ]
+        });
+        alert.present();
+        return
+      }
+      else if(this.influencer_detail.status=='Approved'){
+      this.navCtrl.push(LoyaltyPurchaseListPage,{'type':this.influencer_detail.type,'login_data':this.influencer_detail})
+      }
     }
     
     
@@ -289,7 +344,60 @@ export class LoyaltyHomePage {
       this.navCtrl.push(LoyaltyVideoPage)
     }
     goToTracker() {
+      if(this.influencer_detail.status=='Pending'){
+        let alertmodal = this.alertCtrl.create({
+          // title: 'Sorry!',
+          cssClass: 'action-close',
+          subTitle: "Your current profile status is  <strong class=Pending>“Pending”</strong>. You can see the Track Request only if your profile status is <strong class=Approved>“Approved”</strong>. To know more, you can call us at <a href=tel:1800000000>1800000000</a>",
+          buttons: [
+            {
+              text: 'Okay',
+              handler: () => {
+              }
+            }
+          ]
+        });
+        alertmodal.present();
+        return
+
+      }
+
+      else if (this.influencer_detail.status == 'Reject') {
+        let alert = this.alertCtrl.create({
+          // title: 'Sorry!',
+          cssClass: 'action-close status-alert',
+          subTitle: "Your current profile status is  <strong class=Reject>“Reject”</strong>. You can see the Track Request only if your profile status is <strong class=Approved>“Approved”</strong>. To know more, you can call us at <a href=tel:1800000000>1800000000</a>",
+          buttons: [
+            {
+              text: 'Okay',
+              handler: () => {
+              }
+            }
+          ]
+        });
+        alert.present();
+        return
+      }
+
+      else if (this.influencer_detail.status == 'Suspect') {
+        let alert = this.alertCtrl.create({
+          // title: 'Sorry!',
+          cssClass: 'action-close status-alert',
+          subTitle: "Your current profile status is  <strong class=Suspect>“Suspect”</strong>. You can see the Track Request only if your profile status is <strong class=Approved>“Approved”</strong>. To know more, you can call us at <a href=tel:1800000000>1800000000</a>",
+          buttons: [
+            {
+              text: 'Okay',
+              handler: () => {
+              }
+            }
+          ]
+        });
+        alert.present();
+        return
+      }
+      else if(this.influencer_detail.status == 'Approved'){
       this.navCtrl.push(LoyaltyGiftTrackerPage)
+      }
     }
     goOnInfluencerlistPage(type){
       console.log(type)
@@ -301,7 +409,7 @@ export class LoyaltyHomePage {
     }
     
     goToGift() {
-      if (this.pointRight.login_status == 'Pending') {
+      if (this.influencer_detail.status == 'Pending') {
         let alert = this.alertCtrl.create({
           title: 'Sorry!',
           cssClass: 'action-close',
@@ -318,7 +426,7 @@ export class LoyaltyHomePage {
         return
       }
       
-      else if (this.pointRight.login_status == 'Reject') {
+      else if (this.influencer_detail.status == 'Reject') {
         let alert = this.alertCtrl.create({
           title: 'Sorry!',
           cssClass: 'action-close status-alert',
@@ -334,7 +442,7 @@ export class LoyaltyHomePage {
         alert.present();
         return
       }
-      else if (this.pointRight.login_status == 'Suspect') {
+      else if (this.influencer_detail.status == 'Suspect') {
         let alert = this.alertCtrl.create({
           title: 'Sorry!',
           cssClass: 'action-close status-alert',
@@ -415,7 +523,59 @@ export class LoyaltyHomePage {
     }
     
     goToSupport() {
+      if(this.influencer_detail.status=='Pending'){
+        let alertmodal = this.alertCtrl.create({
+          // title: 'Sorry!',
+          cssClass: 'action-close',
+          subTitle: "Your current profile status is  <strong class=Pending>“Pending”</strong>. You can see the Support only if your profile status is <strong class=Approved>“Approved”</strong>. To know more, you can call us at <a href=tel:1800000000>1800000000</a>",
+          buttons: [
+            {
+              text: 'Okay',
+              handler: () => {
+              }
+            }
+          ]
+        });
+        alertmodal.present();
+        return
+
+      }
+      else if (this.influencer_detail.status == 'Reject') {
+        let alert = this.alertCtrl.create({
+          title: 'Sorry!',
+          cssClass: 'action-close status-alert',
+          subTitle: "Your current profile status is  <strong class=Reject>“Reject”</strong>. You can see the Support only if your profile status is <strong class=Approved>“Approved”</strong>. To know more, you can call us at <a href=tel:1800000000>1800000000</a>",
+          buttons: [
+            {
+              text: 'Okay',
+              handler: () => {
+              }
+            }
+          ]
+        });
+        alert.present();
+        return
+      }
+
+      else if (this.pointRight.login_status == 'Suspect') {
+        let alert = this.alertCtrl.create({
+          title: 'Sorry!',
+          cssClass: 'action-close status-alert',
+          subTitle: "Your current profile status is  <strong class=Suspect>“Suspect”</strong>. You can only see Support when your profile status is <strong class=Approved>“Approved”</strong>. To know more, you can call us at <a href=tel:1800000000>1800000000</a>",
+          buttons: [
+            {
+              text: 'Okay',
+              handler: () => {
+              }
+            }
+          ]
+        });
+        alert.present();
+        return
+      }
+      else if(this.influencer_detail.status=='Approved'){
       this.navCtrl.push(SupportListPage);
+      }
     }
     
     announcementModal() {

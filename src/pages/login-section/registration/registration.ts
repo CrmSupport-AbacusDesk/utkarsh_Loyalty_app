@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ActionSheetController, Loading, ModalController, Nav, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ActionSheetController, Loading, ModalController, Nav, Events, ToastController } from 'ionic-angular';
 import { DbserviceProvider } from '../../../providers/dbservice/dbservice';
 import moment from 'moment';
 import { ConstantProvider } from '../../../providers/constant/constant';
@@ -58,6 +58,7 @@ export class RegistrationPage {
     public storage: Storage,
     public events: Events,
     public serv: LoginserviceProvider,
+    public toastCtrl: ToastController,
   ) {
     console.log(this.navParams);
     this.appVersion = navParams.get('app_version');
@@ -177,6 +178,12 @@ export class RegistrationPage {
 
   checkRight: any
   getRights(type) {
+    this.data.distributor_id='';
+    this.data.dealer_id='';
+    this.data.state='';
+    this.data.district='';
+    this.checks=[];
+
     let index = this.Influencer.findIndex(row => row.type == type)
     if (index != -1) {
       this.data.scanning_rights = this.Influencer[index].scanning_rights;
@@ -488,14 +495,37 @@ export class RegistrationPage {
 
 
   submit() {
+
+    if(this.data.exist_id){
+      if( (this.data.type==2 || this.data.type==4) && (!this.data.document_image || !this.data.document_image_back)){
+        this.alertToast('Upload Aadhar Image is Required!')
+      return;
+  
+      }
+  
+      if( (this.data.type==2 || this.data.type==4) && !this.data.pan_img){
+        this.alertToast('Upload PAN Image is Required!')
+      return;
+  
+      }
+
+    }
+
+    
     if (this.data.dob) {
       this.data.dob = moment(this.data.dob).format('YYYY-MM-DD');
     }
     if (this.data.doa) {
       this.data.doa = moment(this.data.doa).format('YYYY-MM-DD');
     }
-    console.log(this.data);
-
+     if(this.data.type==2){
+      this.data.dealer_id=this.checks?this.checks:[];
+      this.data.assign_type='Dealer'
+     }
+    else if(this.data.type==4){
+      this.data.distributor_id=this.checks?this.checks:[];
+      this.data.assign_type='Distributor';
+     }
     this.savingFlag = true;
     this.myservice.addData({ 'data': this.data }, 'AppInfluencerSignup/addInfluencer').then(result => {
       this.form.phone = this.data.mobile_no;
@@ -521,6 +551,65 @@ export class RegistrationPage {
         this.savingFlag = false;
       }
     });
+
+  }
+
+  alertToast(msg){
+    const toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000
+    });
+    toast.present();
+  }
+  influcencersList:any=[];
+  getnetworklist(state) {
+    // this.against_type=type.influencer_type;
+    this.myservice.addData({'state':state,'type':this.data.type},  'login/dealerList').then((result) => {
+      
+      if(result['statusCode']==200){
+        this.influcencersList = result['result'];
+
+        for(let i = 0 ;i<this.influcencersList.length;i++){
+          if(this.influcencersList[i].company_name==null){
+            this.influcencersList[i].company_name=''
+        }
+        if(this.influcencersList[i].name==null){
+            this.influcencersList[i].name=''
+        }
+        if(this.influcencersList[i].mobile_no==null){
+            this.influcencersList[i].mobile_no=''
+        }
+      
+          if(this.influcencersList[i].name!=""||this.influcencersList[i].mobile_no!=""){
+            this.influcencersList[i].company_name=this.influcencersList[i].company_name+','+'('+this.influcencersList[i].name+'  '+this.influcencersList[i].mobile_no+')'
+          }
+          if(this.influcencersList[i].name==""&&this.influcencersList[i].mobile_no==""){
+            this.influcencersList[i].company_name=this.influcencersList[i].company_name
+          }
+
+          this.influcencersList[i].id=this.influcencersList[i].id
+
+        }
+
+        
+      }else{
+        this.myservice.dismissLoading();
+        this.myservice.errorToast(result['statusMsg'])
+      }
+    }, err => {
+      this.myservice.dismissLoading();
+      this.myservice.errorToast('Something went wrong')
+    });
+  }
+  
+  checked:any=[];
+  checks:any=[];
+  id_array(event){
+    console.log(event);
+    this.checked=event.value
+    for(let i=0;i<=this.checked.length;i++){
+      this.checks.push(this.checked[i].id);
+    }
 
   }
 

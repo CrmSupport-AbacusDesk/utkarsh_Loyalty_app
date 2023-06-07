@@ -23,4 +23,34 @@ page-loyalty-add-purchase {
         }
     }
 
+
+    .kyc-reject-text {
+        color: #3a40ff;
+        text-decoration: underline;
+        margin-left: 5px;
+        display: inline-block;
+    }
+
+    .error-bg {
+        margin-bottom: 16px;
+        padding: 10px;
+        font-size: 12px;
+        line-height: 20px;
+        border-radius: 6px;
+        border: 2px solid;
+
+
+        &.kyc-pending {
+            background: #fff6db;
+            border-color: #ffda6a;
+        }
+
+        &.kyc-reject {
+            background: #ffe9e9;
+            border-color: #ff0008;
+        }
+
+       
+    }
+
 }

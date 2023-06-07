@@ -8,6 +8,7 @@ import { LoyaltyAddPurchasePage } from '../loyalty-add-purchase/loyalty-add-purc
 import { ExpenseStatusModalPage } from '../expense-status-modal/expense-status-modal';
 import { LoyaltyPurchaseDetailPage } from '../loyalty-purchase-detail/loyalty-purchase-detail';
 import { ConstantProvider } from '../../providers/constant/constant';
+import { RegistrationPage } from '../login-section/registration/registration';
 
 
 /**
@@ -44,7 +45,8 @@ export class LoyaltyPurchaseListPage {
   type:any;
   purchaseType:any;
   tabCount:any={};
-  influencerPurchase:any='My'
+  influencerPurchase:any='My';
+  influencer_detail:any={};
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -65,6 +67,7 @@ export class LoyaltyPurchaseListPage {
     }
     
     ionViewWillEnter() {
+      this.influencer_detail=this.navParams.get('login_data');
       this.userId=this.navParams.get("login_id");
       this.activeTab = 'Pending';
       if(this.type!=3){
@@ -233,6 +236,12 @@ export class LoyaltyPurchaseListPage {
       setTimeout(() => {
         refresher.complete();
       }, 1000);
+    }
+
+
+    updateDetail() {
+      this.influencer_detail.edit_profile = 'edit_profile';
+      this.navCtrl.push(RegistrationPage, { 'data': this.influencer_detail, "mode": 'edit_page' })
     }
     
     

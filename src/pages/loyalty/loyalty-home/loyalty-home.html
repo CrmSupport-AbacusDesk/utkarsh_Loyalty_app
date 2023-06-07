@@ -119,6 +119,10 @@
                 <div class="icons"><i class="material-icons">receipt_long</i></div>
                 {{'Point History'}}
             </div>
+            <div class="outline-btn" (click)="goToSupport();">
+                <i class="material-icons">help</i>
+                {{'Support'}}
+            </div>
 
             <!-- <div class="outline-btn" (click)="goOnTransferwalletListPage()"
             *ngIf="influencer_detail.type!=1">
@@ -146,10 +150,7 @@
                 <i class="material-icons">fmd_good</i>
                 {{'Track Request'}}
             </div>
-            <!-- <div class="outline-btn" (click)="goToSurvey()">
-                <i class="material-icons ">poll</i>
-                {{'Survey'}}
-            </div> -->
+          
             <!-- <div class="outline-btn" (click)="goToBonusPoint();" *ngIf="pointRight.scanning_rights == 'Yes' || pointRight.point_transfer_rights == 'Yes' ">
             <i class="material-icons">fmd_good</i>
             {{'Bonus Point'}}
@@ -162,7 +163,7 @@
 
             <div class="outline-btn" (click)="goToAbout();">
                 <i class="material-icons">info</i>
-                {{'About Us'}}
+                {{'Tutorial Guide'}}
             </div>
 
             <div class="outline-btn" (click)="goToContact();">
@@ -170,13 +171,15 @@
                 {{'Contact Us'}}
             </div>
 
+              <div class="outline-btn" (click)="goToSurvey()">
+                <i class="material-icons ">poll</i>
+                {{'Survey'}}
+            </div>
+
            
 
 
-            <div class="outline-btn" (click)="goToSupport();">
-                <i class="material-icons">help</i>
-                {{'Support'}}
-            </div>
+          
         </div>
 
     </div>

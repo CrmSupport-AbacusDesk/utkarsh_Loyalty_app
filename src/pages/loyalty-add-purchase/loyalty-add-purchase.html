@@ -132,7 +132,7 @@
       
       
       <div class="upload-doc mt20">
-        <p class="">Upload Image</p>
+        <p class="">Upload Image<span style="color:red">*</span></p>
         <ul class="no-padding">
           
           <li class="image-upload" *ngFor="let pic of image_data;let i = index;">
@@ -147,10 +147,26 @@
             </li>
           </ul>
         </div>
+
+        <ng-container *ngIf="influencer_detail.flag==0 && (influencer_detail.type==2 || influencer_detail.type==4)">
+          <div class="error-bg mt10"  [ngClass]="{'kyc-reject': influencer_detail.flag==0}">
+          <ng-container>
+            Please Update Your KYC!<a class="kyc-reject-text"
+            (click)="updateDetail()"> Update Now</a>
+          </ng-container>
+     
+          </div>
+          </ng-container>
         
-        <div class="mt16">
+        <div class="mt16"  *ngIf="influencer_detail.flag==1 && (influencer_detail.type==2 || influencer_detail.type==4)">
           <button ion-button block class="capitalize" [disabled]="saveFlag" ><ion-spinner *ngIf="spinner == true"></ion-spinner>Save</button>
         </div>
+
+        <div class="mt16"  *ngIf="influencer_detail.type!=2 && influencer_detail.type!=4">
+          <button ion-button block class="capitalize" [disabled]="saveFlag" ><ion-spinner *ngIf="spinner == true"></ion-spinner>Save</button>
+        </div>
+
+        
         
       </ion-list>
     </div>
