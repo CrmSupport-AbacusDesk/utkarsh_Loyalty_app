@@ -59,7 +59,6 @@ export class ConstantProvider {
 
     //Live URL //
 
-
     public rootUrl2: string = 'https://apps.basiq360.com/utkarshindia/api/index.php/'
     public rootUrl: string = 'https://apps.basiq360.com/utkarshindia/api/index.php/app/'
     public rootUrl1: string = 'https://apps.basiq360.com/utkarshindia/'
@@ -73,6 +72,7 @@ export class ConstantProvider {
     public loyaltyUrl: string = 'https://apps.basiq360.com/utkarshindia/api/';
     public influencer_doc: string = 'https://apps.basiq360.com/utkarshindia/api/uploads/influencer_doc/';
     public support_url: string = 'https://apps.basiq360.com/utkarshindia/api/uploads/support/';
+
 
 
 

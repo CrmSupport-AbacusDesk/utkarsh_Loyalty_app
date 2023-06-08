@@ -14,7 +14,7 @@
   </div>
   <div class="padding16">
     <div class="image-card">
-      <img src="{{uploadUrl+gift_detail.gift_img}}" *ngIf="gift_detail.gift_type != 'Cash'">
+      <img src="{{uploadUrl+gift_detail.gift_img}}" *ngIf="gift_detail.gift_type != 'Cash' && !gift_detail.gift_img==''">
       <img src="assets/imgs/cash.png" alt=""  *ngIf="gift_detail.gift_type == 'Cash'">
       
     </div>
