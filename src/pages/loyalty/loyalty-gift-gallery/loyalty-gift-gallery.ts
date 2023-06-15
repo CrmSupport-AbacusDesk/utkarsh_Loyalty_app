@@ -49,6 +49,7 @@ export class LoyaltyGiftGalleryPage {
         return
       }
       else{
+        console.log(id)
         this.navCtrl.push(LoyaltyGiftGalleryDetailPage,{'id':id})
       }
 
