@@ -27,7 +27,7 @@ export class ProductSubDetail2Page {
   active_image: any = ''
   user_data: any = {};
   userType: any
-  company_name: any = 'UTKARSH INDIA LTD.'
+  company_name: any = 'UTKARSH UPAHAR'
   image_url: any = ''
   share_image: any;
   

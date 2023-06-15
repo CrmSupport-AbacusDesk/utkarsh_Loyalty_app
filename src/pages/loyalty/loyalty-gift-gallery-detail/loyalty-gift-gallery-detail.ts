@@ -34,8 +34,9 @@ export class LoyaltyGiftGalleryDetailPage {
     this.gift_id = this.navParams.get('id');
     this.uploadUrl = constant.upload_url1+'gift_gallery/';
     this.service.presentLoading();
-    this.getGiftDetail(this.gift_id);
-    console.log('Data id',this.db.tokenInfo.id)
+    console.log(this.gift_id)
+    this.getGiftDetail();
+    // console.log('Data id',this.db.tokenInfo.id)
 
   }
   
@@ -47,9 +48,9 @@ export class LoyaltyGiftGalleryDetailPage {
   }
   
   
-  getGiftDetail(gift_id)
+  getGiftDetail()
   {
-    this.service.addData({'id' :gift_id},'AppGiftGallery/giftGalleryDetail').then( (result) =>
+    this.service.addData({'id':this.gift_id},'AppGiftGallery/giftGalleryDetail').then( (result) =>
     {
       if(result['statusCode'] == 200){
         this.gift_detail=result['gift_master_list'];
