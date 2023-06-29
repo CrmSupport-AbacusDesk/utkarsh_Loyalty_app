@@ -1,31 +1,31 @@
 <ion-header>
   <ion-navbar>
     <ion-title class="f14">
-      Add Purchase Order
+      {{mode?'Edit Purchase':'Add Purchase Order'}}
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <form  #f="ngForm" (ngSubmit)=" f.valid && submit(f)">
+  <form  #f="ngForm" (ngSubmit)="f.valid && mode?Editpurchase():f.valid && submit()">
     <div class="form">
       <ion-list>
 
-        <!-- <ion-item class="cs-input mt0" [ngClass]="{'error':f.submitted && against_influencer_type?.invalid}" *ngIf="type!=4 && type!=2 && type!=1 ">
+        <ion-item class="cs-input mt0" [ngClass]="{'error':f.submitted && against_influencer_type?.invalid}" *ngIf="type==1">
           <ion-label floating>{{'Select Type'}}<span>*</span></ion-label>
-          <ion-select name="against_influencer_type" [(ngModel)]="data.against_influencer_type" #against_influencer_type="ngModel"  (ngModelChange)="getnetworklist()" [disabled]="add_list.length > 0" required >
+          <ion-select name="against_influencer_type" [(ngModel)]="data.against_influencer_type" #against_influencer_type="ngModel"  (ngModelChange)="getnetworklist(data.against_influencer_type)" [disabled]="mode && data.against_influencer_type" required >
             <ion-option value="Distributor" >Distributor</ion-option>
-            <ion-option value="Dealer" *ngIf="type!=4">Dealer</ion-option>
-            <ion-option value="Retailer" *ngIf="type!=2 && type!=4">Retailer</ion-option>
+            <ion-option value="Dealer">Dealer</ion-option>
+            <ion-option value="Retailer">Retailer</ion-option>
           </ion-select>
-        </ion-item> -->
+        </ion-item>
 
-        <ng-container *ngIf="data.against_influencer_type || type==4 || type==1">
+        <ng-container *ngIf="data.against_influencer_type || type==4">
           <ion-item [ngClass]="{'error':f.submitted && against_influencer_id?.invalid}">
             <ion-label floating *ngIf="data.against_influencer_type=='Distributor' || type==4">{{'Select Distributor'}}<span>*</span></ion-label>
             <ion-label floating *ngIf="data.against_influencer_type=='Dealer' || type==2">{{'Select Dealer'}}<span>*</span></ion-label>
-            <!-- <ion-label floating *ngIf="data.against_influencer_type=='Retailer'">{{'Select Retailer'}}<span>*</span></ion-label> -->
-            <ion-label floating *ngIf="data.against_influencer_type=='Plumber'">{{'Select Company Name'}}<span>*</span></ion-label>
+            <ion-label floating *ngIf="data.against_influencer_type=='Retailer'">{{'Select Retailer'}}<span>*</span></ion-label>
+            <!-- <ion-label floating *ngIf="data.against_influencer_type=='Plumber'">{{'Select Company Name'}}<span>*</span></ion-label> -->
 
   
             <ionic-selectable 
@@ -56,8 +56,8 @@
         </ion-item>
         
         <ion-item  [ngClass]="{'error':f.submitted && bill_no?.invalid}">
-          <ion-label floating>{{'Bill No.'}}<span>*</span></ion-label>
-          <ion-input type="text" name="bill_no" #bill_no="ngModel" [(ngModel)]="data.bill_no"  required></ion-input>
+          <ion-label floating>{{'Bill No.'}}<span *ngIf="type!=1">*</span></ion-label>
+          <ion-input type="text" name="bill_no" #bill_no="ngModel" [(ngModel)]="data.bill_no"  [required]="type!=1"></ion-input>
         </ion-item>
         <!-- <div class="cs-heading1 pl0" >
           <p>ITEM INFORMATION</p>
@@ -131,12 +131,12 @@
       
       
       
-      <div class="upload-doc mt20">
+      <!-- <div class="upload-doc mt20">
         <p class="">Upload Image<span style="color:red">*</span></p>
         <ul class="no-padding">
           
           <li class="image-upload" *ngFor="let pic of image_data;let i = index;">
-            <img src="{{pic}}">
+            <img src="{{data.img_id?uploadurl+pic.image: pic.image}}">
             <button class="del"><i class="material-icons"
               (click)="remove_image(i)">delete_sweep</i></button>
             </li>
@@ -146,7 +146,41 @@
               Upload  <span>Here</span>
             </li>
           </ul>
+        </div> -->
+
+
+        <div class="upload-doc mt20">
+          <p class="">Upload Image<span style="color:red">*</span></p>
+          <ul class="no-padding">
+            <li  class="image-upload" *ngFor="let row of selImages; let i=index" [ngClass]="{'active': data.profile_selected == row.id}">
+              <img src="{{row.id ? uploadurl+row.image : row.image}}">
+              <button class="del"><i class="material-icons"
+                (click)="remove_image(i)">delete_sweep</i></button>
+            </li>
+         
+            <li class="add_image" (click)="selImages.length <= 5 ?  captureMedia() : showLimit()">
+              <img src="assets/imgs/upload_imae_icon.png" alt="">
+              Upload  <span>Here</span>
+            </li>
+          </ul>
         </div>
+
+
+        <!-- <div class="uploade-image">
+          <ul>
+            <li *ngFor="let row of selImages; let i=index" [ngClass]="{'active': data.profile_selected == row.id}">
+              <img src="{{row.id ? uploadurl+row.image : row.image}}">
+              <span class="cancel-icon">
+                <i class="material-icons crose-icon" (click)="showConfirm(i,row.id)">clear</i>
+              </span>
+            </li>
+            <li class="add-bg-1" (click)="takeDocPhotopers()">
+              <i class="material-icons">add</i>
+              <p >Take a Picture</p>
+            </li>
+          </ul>
+        </div> -->
+       
 
         <ng-container *ngIf="influencer_detail.flag==0 && (influencer_detail.type==2 || influencer_detail.type==4)">
           <div class="error-bg mt10"  [ngClass]="{'kyc-reject': influencer_detail.flag==0}">
@@ -159,11 +193,11 @@
           </ng-container>
         
         <div class="mt16"  *ngIf="influencer_detail.flag==1 && (influencer_detail.type==2 || influencer_detail.type==4)">
-          <button ion-button block class="capitalize" [disabled]="saveFlag" ><ion-spinner *ngIf="spinner == true"></ion-spinner>Save</button>
+          <button ion-button block class="capitalize" [disabled]="saveFlag" ><ion-spinner *ngIf="spinner == true"></ion-spinner>{{mode?'Update':'Save'}}</button>
         </div>
 
         <div class="mt16"  *ngIf="influencer_detail.type!=2 && influencer_detail.type!=4">
-          <button ion-button block class="capitalize" [disabled]="saveFlag" ><ion-spinner *ngIf="spinner == true"></ion-spinner>Save</button>
+          <button ion-button block class="capitalize" [disabled]="saveFlag" ><ion-spinner *ngIf="spinner == true"></ion-spinner>{{mode?'Update':'Save'}}</button>
         </div>
 
         

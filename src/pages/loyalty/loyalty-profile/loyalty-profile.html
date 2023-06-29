@@ -9,7 +9,7 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content style="background-color: #f8f8f8;">
+<ion-content style="background-color: #00a69b;">
     <div class="profile-container">
         <div class="background-white hero"></div>
         <button class="edit" (click)="updateProfile()" *ngIf="karigar_detail.status != 'Approved'"> <i
@@ -196,7 +196,7 @@
                             <h6>{{karigar_detail.distributor_name ? karigar_detail.distributor_name :'----'}}</h6>
                         </div>
                     </div> -->
-                    <div class="profile-card">
+                    <div class="profile-card" *ngIf="karigar_detail.type==1">
                         <div class="text-center">
                             <h2>{{ 'Referral Code Information' }}</h2>
                             <a class="share" (click)="ShareApp()"><i class="material-icons">share</i></a>

@@ -4,6 +4,7 @@ import { ConstantProvider } from '../../providers/constant/constant';
 import { DbserviceProvider } from '../../providers/dbservice/dbservice';
 import { MyserviceProvider } from '../../providers/myservice/myservice';
 import { ViewProfilePage } from '../view-profile/view-profile';
+import { LoyaltyAddPurchasePage } from '../loyalty-add-purchase/loyalty-add-purchase';
 
 /**
  * Generated class for the LoyaltyPurchaseDetailPage page.
@@ -42,7 +43,7 @@ export class LoyaltyPurchaseDetailPage {
 
   }
   
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     this.id = this.navParams.get('id');
     this.contractorDetail();
   }
@@ -82,6 +83,10 @@ export class LoyaltyPurchaseDetailPage {
 
     imageModal(src) {
       this.modalCtrl.create(ViewProfilePage, { "Image": src }).present();
+    }
+
+    EditPurchase() {
+      this.navCtrl.push(LoyaltyAddPurchasePage, { "data": this.conDetail,'type':this.type,'userId':this.userId ,'mode':'ediPage'})
     }
   }
   

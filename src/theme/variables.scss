@@ -32,6 +32,8 @@ $colors: (
     dark: #2e2e2e,
     medium: #ebebeb,
     danger: #ff0b0b,
+    themePrimary: #279e91,
+
 );
 $avatar-offset: 52+16;
 
@@ -94,7 +96,7 @@ ion-list button .item-inner .input-wrapper ion-label span {
     --secondary-text: #172b4d;
     --bodr-color: #cccccc;
     --sk-primary: #e9e9e9;
-    --sk-secondary: #f1f1f1;
+    --sk-secondary: #00a69b;
     --bodr-rgb: rgba(0, 0, 0, 0.07);
     --rgb-bg: rgba(0, 0, 0, 0.1);
     --shadow: 0 2px 4px -1px #0003, 0 4px 5px #00000024, 0 1px 10px #0000001f
@@ -591,7 +593,7 @@ button {
 }
 
 .profile-bg {
-    background: #f8f8f8 !important;
+    background: #00a69b !important;
 }
 
 .text-center {
@@ -631,7 +633,7 @@ button {
             position: absolute;
             top: 10px;
             right: 16px;
-            background: #f8f8f8;
+            background: #00a69b;
             padding: 5px;
             border-radius: 6px;
 
@@ -1393,7 +1395,7 @@ ul {
 }
 
 .searchBarBox {
-    background-color: #f8f8f8;
+    background-color: #00a69b;
     border: 1px solid #ddd;
     box-shadow: 0 0 5px 5px #f5f5f5;
     border-radius: 5px;
@@ -1824,7 +1826,7 @@ ul {
 .search-container {
     margin: 5px -10px -10px -10px;
     padding: 0px 10px;
-    background: #f8f8f8;
+    background: #00a69b;
 }
 
 .OutOver {
@@ -1899,7 +1901,7 @@ ul {
     justify-content: space-between;
     align-items: center;
     grid-column-gap: 10px;
-    background: #ededed;
+    background: #ffffff;
 
 
     .pts-icon {
@@ -1914,15 +1916,16 @@ ul {
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #dadada;
+            background: #ffffff;
             border-radius: 6px;
-            color: #0a0a0a;
+            color: #ffffff;
         }
     }
 
     .pts {
         font-size: 16px;
         font-weight: bold;
+        color:#ffffff
     }
 
 
@@ -1935,9 +1938,9 @@ ul {
 
         .pts-icon {
             i {
-                background: #d2d2d2;
+                background: #00a69b;
                 border-radius: 6px;
-                color: #000000;
+                color: #ffffff;
             }
         }
     }
@@ -2928,7 +2931,7 @@ ul {
         width: 27px;
         height: 27px;
         text-align: center;
-        border: solid 1px #f8f8f8;
+        border: solid 1px #00a69b;
         box-shadow: 0px 3px 6px 0px #ccc;
     }
 }
@@ -2942,7 +2945,7 @@ ul {
     width: 27px;
     height: 27px;
     text-align: center;
-    border: solid 1px #f8f8f8;
+    border: solid 1px #00a69b;
     box-shadow: 0px 3px 6px 0px #ccc;
 }
 
@@ -3483,7 +3486,7 @@ ul {
     }
 
     &.grid-listing {
-        background: #f8f8f8;
+        background: #00a69b;
 
         .main-div {
             display: flex;
@@ -6493,13 +6496,13 @@ ion-slides {
 
 .center-card {
     border-radius: 6px;
-    background: #f1f1f1;
+    background: #00a69b;
     padding: 5px 16px;
     margin-top: 32px;
     position: relative;
     padding-top: 40px;
     background-size: cover;
-    border: 2px solid #ccc;
+    border: 2px solid #79bf44;
 
 
     .cs-profile {
@@ -6536,7 +6539,7 @@ ion-slides {
 
         p {
             font-size: 12px;
-            color: #000000;
+            color: #ffffff;
 
             span {
                 font-weight: 600;
@@ -6567,14 +6570,14 @@ ion-slides {
 
         h1 {
             font-size: 14px;
-            color: #000000;
+            color: #ffffff;
             opacity: 0.8;
         }
 
         h2 {
             font-size: 20px;
             font-weight: 600;
-            color: #000000;
+            color: #ffffff;
             line-height: 22px;
         }
     }
@@ -6596,7 +6599,7 @@ ion-slides {
 
             h2 {
                 font-size: 16px;
-                color: #000000;
+                color: #ffffff;
                 font-weight: 600;
                 line-height: 22px;
                 padding: 10px 0px !important;
@@ -6604,7 +6607,7 @@ ion-slides {
 
             p {
                 font-size: 13px;
-                color: #232323;
+                color: #ffffff;
                 background: rgba(0, 0, 0, 0.040);
                 padding: 5px 0px !important;
                 font-weight: 600;
@@ -6626,7 +6629,7 @@ ion-slides {
 }
 
 .outline-btn {
-    border: 2px solid #bcbcbc;
+    border: 2px solid #79bf44;
     text-align: center;
     padding: 16px;
     border-radius: 8px;
@@ -6637,8 +6640,8 @@ ion-slides {
     grid-column-gap: 10px;
     font-weight: bold;
     text-transform: capitalize;
-    background: #f1f1f1;
-    color: #403e3e;
+    background: #00a69b;
+    color: #ffffff;
     flex-direction: column;
     grid-row-gap: 10px;
 
@@ -6664,16 +6667,20 @@ ion-slides {
 
     ion-icon,
     i {
+        // font-size: 40px;
+        // background: -webkit-linear-gradient(#c5c5c5, #ffffff);
+        // -webkit-background-clip: text;
+        // -webkit-text-fill-color: transparent;
+
         font-size: 40px;
-        background: -webkit-linear-gradient(#c5c5c5, #000000);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color:#ffffff;
+        opacity: 0.9;
     }
 }
 
 
 .Point-main {
-    border-bottom: 4px solid #d8d8d8;
+    border-bottom: 4px solid #ffffff;
 
     .point-block {
         .point-content {
@@ -6696,7 +6703,7 @@ ion-slides {
     .Bottom-content {
         display: flex;
         justify-content: space-around;
-        background-color: #f8f8f8;
+        background-color: #00a69b;
 
         .bottom-value {
             flex: 1;
@@ -8712,7 +8719,7 @@ a {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #f8f8f8;
+    background: #00a69b;
     padding: 10px 16px;
 }
 
@@ -8845,7 +8852,7 @@ a {
 }
 
 .list-outer .list-inner .heading {
-    /* background: #f8f8f8; */
+    /* background: #00a69b; */
     display: flex;
     align-items: center;
     padding: 8px 16px;
@@ -8999,7 +9006,7 @@ a {
         box-sizing: border-box;
         padding: 0px 10px;
         width: 100%;
-        background: #f8f8f8;
+        background: #00a69b;
     }
 
     a {
@@ -9079,7 +9086,7 @@ a {
 }
 
 .list-outer.ordlist .list-inner .min-heading .cs-r {
-    background: #f8f8f8;
+    background: #00a69b;
     padding: 10px;
     border-radius: 20px 0px 0px 20px;
     border: solid 1px #ccc;
@@ -9851,7 +9858,7 @@ ion-menu {
 
 .seeall {
     height: 35px;
-    background: #f8f8f8;
+    background: #00a69b;
     border: 1px solid #b4b4b4;
     display: flex;
     align-items: center;
@@ -9982,7 +9989,7 @@ ion-menu {
 
     .figure {
         width: 50%;
-        background: #f8f8f8;
+        background: #00a69b;
         border: 1px dashed rgba(0, 0, 0, 0.3);
         padding: 5px 10px;
         margin-left: -1px;
@@ -10096,7 +10103,7 @@ ion-menu {
 }
 
 .cs-figure {
-    background: #f8f8f8;
+    background: #00a69b;
     border: 1px dashed rgba(0, 0, 0, 0.3);
     padding: 10px;
     margin-left: -1px;
@@ -10186,7 +10193,7 @@ ion-menu {
 
     .figure-innear {
         border: 1px solid $border-clr;
-        background: #f8f8f8;
+        background: #00a69b;
 
         .cs-figure {
             width: 100%;
@@ -11058,7 +11065,7 @@ ion-tabs {
 
 .no-dtp {
     p {
-        background: #f8f8f8;
+        background: #00a69b;
         padding: 16px !important;
         text-align: center;
         font-size: 14px;
@@ -12564,7 +12571,7 @@ $avatar-offset: 52+16;
             }
 
             th {
-                background: #f8f8f8;
+                background: #00a69b;
                 font-weight: 600;
                 font-size: 11px;
             }
@@ -12610,7 +12617,7 @@ $avatar-offset: 52+16;
                     height: 30px;
                     width: 40px;
                     text-align: center;
-                    background: #f8f8f8;
+                    background: #00a69b;
                     font-size: 14px;
                     border: solid 1px #ccc;
                 }
@@ -12717,7 +12724,7 @@ $avatar-offset: 52+16;
     top: 0px;
     left: 0px;
     z-index: 9;
-    background: #f8f8f8;
+    background: #00a69b;
     padding: 16px;
 
     .pr-figure {
@@ -13335,7 +13342,7 @@ $avatar-offset: 52+16;
 ion-list {
     ion-list-header {
         &.border-heading {
-            background: #f8f8f8;
+            background: #00a69b;
             margin-bottom: 0px;
 
             .item-inner {
@@ -14699,7 +14706,7 @@ button {
     align-items: center;
     margin: 16px;
     padding: 10px;
-    background: #f8f8f8;
+    background: #00a69b;
     border-radius: 7px;
     position: relative;
     box-shadow: 0px 1px 4px 0px #ccc;
@@ -14875,7 +14882,7 @@ ion-footer {
         position: relative;
         border-right: 1px solid #e6e6e6;
         padding: 12px 15px;
-        background: #f8f8f8;
+        background: #00a69b;
         border-radius: 5px 0px 0px 5px;
         text-align: center;
 
@@ -15185,7 +15192,7 @@ ion-footer {
         font-size: 16px;
         margin-right: 16px;
         color: #56293a;
-        background: #f8f8f8;
+        background: #00a69b;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -17440,7 +17447,7 @@ ion-list {
 
 .description-box {
     padding: 10px;
-    background: #f8f8f8;
+    background: #00a69b;
     width: 100% !important;
 
     p {

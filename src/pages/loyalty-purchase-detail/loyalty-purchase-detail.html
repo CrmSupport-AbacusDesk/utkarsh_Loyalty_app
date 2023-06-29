@@ -2,6 +2,8 @@
   <ion-navbar>
     <ion-title>{{ 'Purchase Detail'  }}</ion-title>
   </ion-navbar>
+        <button  (click)="EditPurchase()" *ngIf="conDetail.status=='Pending' && this.tabType=='My'"> <i
+            class="material-icons">edit</i></button>
 </ion-header>
 
 

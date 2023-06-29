@@ -67,12 +67,12 @@ export class RegistrationPage {
     this.data['device_info'] = this.device.model + ',' + this.device.platform + ',' + this.device.version + ',' + this.device.manufacturer;
     this.uploadurl = constant.influencer_doc;
     this.getInfluencer();
-    this.getUser();
+    this.getstatelist();
+    // this.getUser();
     this.data.document_image = '';
     this.data.pan_img = '';
     this.data.bank_img = '';
     this.data.document_image_back = '';
-    this.getstatelist();
     if (this.navParams.data.data.registerType == 'Other') {
       this.data.mobile_no = this.navParams.data.data.phone;
     }
@@ -121,9 +121,9 @@ export class RegistrationPage {
           this.getDistrictList(this.data.state);
         }
         this.getInfluencer();
-        setTimeout(() => {
-          this.getRights(this.data.type);
-        }, 500);
+        // setTimeout(() => {
+        //   this.getRights(this.data.type);
+        // }, 500);
       }
     }
     this.today_date = new Date().toISOString().slice(0, 10);
@@ -204,7 +204,7 @@ export class RegistrationPage {
   }
 
   getDistrictList(state_name) {
-    this.service.post_rqst({ 'state_name': state_name }, 'AppInfluencerSignup/getDistrict').subscribe(result => {
+    this.myservice.addData({ 'state_name': state_name }, 'AppInfluencerSignup/getDistrict').then(result => {
       if (result['statusCode'] == 200) {
         this.district_list = result['all_district'];
       }
@@ -496,15 +496,21 @@ export class RegistrationPage {
 
   submit() {
 
+    if(this.data.type==4 && !this.data.pan_img && !this.data.exist_id){
+      this.myservice.errorToast('Upload PAN Image is Required!')
+    return;
+
+    }
+
     if(this.data.exist_id){
       if( (this.data.type==2 || this.data.type==4) && (!this.data.document_image || !this.data.document_image_back)){
-        this.alertToast('Upload Aadhar Image is Required!')
+        this.myservice.errorToast('Upload Aadhar Image is Required!')
       return;
   
       }
   
       if( (this.data.type==2 || this.data.type==4) && !this.data.pan_img){
-        this.alertToast('Upload PAN Image is Required!')
+        this.myservice.errorToast('Upload PAN Image is Required!')
       return;
   
       }

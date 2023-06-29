@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
 import { MyserviceProvider } from '../../../providers/myservice/myservice';
+import { ExpenseStatusModalPage } from '../../expense-status-modal/expense-status-modal';
 
 
 @IonicPage()
@@ -22,7 +23,7 @@ export class LoyaltyPointHistoryPage {
   influencer_point:any = {};
   type:any;
   pointTransferlist:any=[];
-  constructor(public navCtrl: NavController, public navParams: NavParams,public service:MyserviceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public service:MyserviceProvider,public modalCtrl: ModalController) {
     this.type=this.navParams.get('type')
     this.service.presentLoading();
     this.getLedger('');
@@ -153,5 +154,22 @@ export class LoyaltyPointHistoryPage {
             }
             
           }
+
+
+          statusModal(id) {
+            let modal = this.modalCtrl.create(ExpenseStatusModalPage, {'from': 'PointHistory' });
+        
+            modal.onDidDismiss(data => {
+              console.log(data)
+              this.filter.date_to=data.date_to
+              this.filter.date_from=data.date_from
+                this.getLedger('');
+
+              // this.getPointList(); 
+            });
+        
+            modal.present();
+          }
+        
         }
         

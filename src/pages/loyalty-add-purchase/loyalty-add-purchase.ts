@@ -38,6 +38,9 @@ export class LoyaltyAddPurchasePage {
   catList:any=[];
   type:any;
   against_type:any;
+  mode:any='';
+  uploadurl: any
+
   
   already_exsist : boolean = false;
   saveFlag : boolean = false;
@@ -45,23 +48,42 @@ export class LoyaltyAddPurchasePage {
   max_date = new Date().getFullYear() + 1;
   constructor(public navCtrl: NavController,private camera:Camera, public navParams: NavParams, public serve: MyserviceProvider,public actionSheetController: ActionSheetController,public constant: ConstantProvider
     ,public alertCtrl: AlertController,public toastCtrl: ToastController,) {
+    this.uploadurl = constant.influencer_doc;
       this.userId=this.navParams.get('userId')
       this.type=this.navParams.get("type");
-      console.log(this.type);
+      this.mode=this.navParams.get("mode");
+      if(this.mode){
+        this.data=this.navParams.get("data");
+        console.log(this.data)
+        this.getnetworklist(this.data.against_influencer_type)
+        for(let i=0; i<this.data.image.length ;i++)
+        {
+          // if( parseInt( this.siteform.images[i].profile ) == 1  )
+          this.selImages.push({"image":this.data.image[i].image,"id":this.data.image[i].id} );
+        }
+        console.log( this.selImages)
+        // this.image_data=this.data.image
+        console.log(this.image_data)
+        this.data.img_id = this.data.id;
+      }
        if(this.type==4){
         this.data.against_influencer_type='Distributor'
+        if(!this.mode){
         this.getnetworklist('') 
+        }
        }
        if(this.type==2){
         this.data.against_influencer_type='Dealer';
-        this.getnetworklist('') 
+        if(!this.mode){
+          this.getnetworklist('') 
+          }
        }
-       if(this.type==1){
-        this.data.against_influencer_type='Plumber';
-        this.getnetworklist('') 
-       }
-      this.categoryList();
-
+      //  if(this.type==1){
+      //   this.data.against_influencer_type='Plumber';
+      //   this.getnetworklist('') 
+      //  }
+      // this.categoryList();
+     
       
     }
     
@@ -69,12 +91,13 @@ export class LoyaltyAddPurchasePage {
     }
     ionViewWillEnter(){
       this.influencerDetail();
+    
     }
     
     
     getnetworklist(type) {
       this.against_type=type.influencer_type;
-      this.serve.addData({'influencer_id':this.constant.UserLoggedInData.id,'type':this.data.against_influencer_type},  'AppInfluencerSignup/getInfluencerList').then((result) => {
+      this.serve.addData({'influencer_id':this.constant.UserLoggedInData.id,'type':this.data.against_influencer_type,'state':this.constant.UserLoggedInData.state},  'AppInfluencerSignup/getInfluencerList').then((result) => {
         
         if(result['statusCode']==200){
           this.influcencersList = result['result'];
@@ -96,6 +119,13 @@ export class LoyaltyAddPurchasePage {
             if(this.influcencersList[i].name==""&&this.influcencersList[i].mobile_no==""){
               this.influcencersList[i].company_name=this.influcencersList[i].company_name
             }
+
+           
+          }
+          if(this.mode){
+            this.data.against_influencer_id=this.influcencersList.filter(row=>row.id == this.data.against_influencer_id)
+            console.log(this.data.against_influencer_id)
+            this.data.against_influencer_id=this.data.against_influencer_id[0];
           }
 
           
@@ -151,6 +181,7 @@ export class LoyaltyAddPurchasePage {
       this.serve.addData({ dr_id: this.constant.UserLoggedInData.id, type: this.constant.UserLoggedInData.type }, 'login/login_data').then((res) => {
         if (res['statusCode'] == 200) {
           this.influencer_detail = res['loginData']['login_data'];
+          console.log(this.influencer_detail )
         
         }
          else {
@@ -211,7 +242,7 @@ export class LoyaltyAddPurchasePage {
           handler: () => {
             
             
-            this.takePhoto();
+            this.takeDocPhoto();
           }
         },
         {
@@ -229,6 +260,10 @@ export class LoyaltyAddPurchasePage {
           role: 'cancel',
           icon: 'cancel',
           handler: () => {
+          this.data.img_id = this.data.id;
+
+
+
             
           }
         }
@@ -236,29 +271,62 @@ export class LoyaltyAddPurchasePage {
     });
     actionsheet.present();
   }
-  
-  takePhoto() {
-    
-    const options: CameraOptions =
-    {
-      quality: 70,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      targetWidth: 500,
-      targetHeight: 400,
-      cameraDirection: 1,
-      correctOrientation: true
-    }
-    this.camera.getPicture(options).then((imageData) => {
-      this.image = 'data:image/jpeg;base64,' + imageData;
+  // takePhoto() {
+  //   const options: CameraOptions =
+  //   {
+  //     quality: 70,
+  //     destinationType: this.camera.DestinationType.DATA_URL,
+  //     targetWidth: 500,
+  //     targetHeight: 400,
+  //     cameraDirection: 1,
+  //     correctOrientation: true
+  //   }
+  //   this.camera.getPicture(options).then((imageData) => {
+  //     this.data.img_id = '';
+
+  //     this.data.image = 'data:image/jpeg;base64,' + imageData;
+  //     console.log(this.image);
+  //     this.image_data.push({"image":this.data.image});
+  //     console.log(this.image_data,'pushh')
+  //     this.data.image= this.image_data;
+  //     console.log(this.image)
+  //     this.image='';
       
-      if (this.image) {
-        this.fileChange(this.image);
+  //     // if (this.image) {
+  //     //   console.log(this.image)
+  //     //   this.fileChange(this.image);
+  //     // }
+  //   },
+  //   (err) => {
+  //   });
+  // }
+  selImages:any=[];
+  takeDocPhoto()
+{
+      
+      const options: CameraOptions = {
+        quality: 75,
+        destinationType: this.camera.DestinationType.DATA_URL,
+        targetWidth : 1050,
+        targetHeight : 1000 
       }
-    },
-    (err) => {
-    });
-  }
+      
+      console.log(options);
+      this.camera.getPicture(options).then((imageData) => {        
+        this.data.image = 'data:image/jpeg;base64,' + imageData;
+        this.selImages.push({"image":this.data.image});
+        this.data.images = this.selImages;
+        console.log(this.data, 'line number 309');
+        
+        this.data.image='';
+      }, (err) => {
+      });
+      
+      
+     
   
+  
+}
   getImage() {
     const options: CameraOptions =
     {
@@ -272,26 +340,32 @@ export class LoyaltyAddPurchasePage {
     
     
     this.camera.getPicture(options).then((imageData) => {
-      this.image = 'data:image/jpeg;base64,' + imageData;
+      this.data.image = 'data:image/jpeg;base64,' + imageData;
+      this.selImages.push({"image":this.data.image});
+      this.data.images = this.selImages;
+      
+      this.data.image='';
       
       
-      if (this.image) {
-        this.fileChange(this.image);
-      }
+      
     }, (err) => {
     });
   }
 
 
-  
-  fileChange(img) {
-    // this.image_data=[];
-    this.image_data.push(img);
-    this.image = '';
-  }
+  old_img:any=[]
+  // fileChange(img) {
+  //   // this.image_data=[];
+  //   console.log(this.image_data)
+
+  //   this.image_data.push({'image':img});
+  //   console.log(this.image_data)
+    
+  //   this.image = '';
+  // }
   
   remove_image(i: any) {
-    this.image_data.splice(i, 1);
+    this.selImages.splice(i, 1);
   }
   
   numeric_Number(event: any) {
@@ -305,6 +379,9 @@ export class LoyaltyAddPurchasePage {
 
   updateDetail() {
     this.influencer_detail.edit_profile = 'edit_profile';
+    console.log(this.influencer_detail)
+    console.log(this.influencer_detail.state)
+
     this.navCtrl.push(RegistrationPage, { 'data': this.influencer_detail, "mode": 'edit_page' })
   }
 
@@ -337,7 +414,7 @@ alertToast(msg){
 
 submit(){
   
-  if(!this.image_data.length){
+  if(!this.selImages.length){
     let alert = this.alertCtrl.create({
       title: 'Alert',
       subTitle: "Upload Bill Image Is Required!",
@@ -384,7 +461,7 @@ let alert = this.alertCtrl.create({
         this.data.against_influencer_id = this.data.against_influencer_id.id;
         this.data.against_influencer_type=this.against_type;
 
-        this.data.image = this.image_data?this.image_data:[];
+        this.data.image = this.selImages?this.selImages:[];
         this.serve.addData({'data':this.data}, 'RetailerRequest/add_retailer_request').then((result) => {
           
           if(result['statusCode']==200){
@@ -414,6 +491,87 @@ let alert = this.alertCtrl.create({
 alert.present();
 
 }
+
+Editpurchase(){
+  
+    if(!this.selImages.length){
+      let alert = this.alertCtrl.create({
+        title: 'Alert',
+        subTitle: "Upload Bill Image Is Required!",
+        cssClass: 'alert-modal',
+        
+        buttons: [{
+          text: 'Ok',
+          role: 'cancel',
+          handler: () => {
+            
+          }
+        }
+      ]
+    });
+    alert.present();
+    return;
+    
+  }
+  
+  let alert = this.alertCtrl.create({
+    title: 'Save Purchase',
+    message: 'Do you want to Update this Purchase?',
+    cssClass: 'alert-modal',
+    buttons: [
+      {
+        text: 'No',
+        role: 'cancel',
+        handler: () => {
+        }
+      },
+      {
+        text: 'Yes',
+        handler: () => {
+          
+          // if(this.add_list < 1){
+          //   this.alertToast('Please add one item at least!')
+          //   return
+          // }
+          this.spinner = true;
+          this.saveFlag = true;
+          // this.data.part = this.add_list;
+          this.data.purchase_id = this.data.id;
+          this.data.influencer_id = this.constant.UserLoggedInData.id;
+          this.data.influencer_type = this.type;
+          this.data.against_influencer_id = this.data.against_influencer_id.id;
+          this.data.against_influencer_type=this.data.against_influencer_type;
+  
+          this.data.image = this.selImages?this.selImages:[];
+          this.serve.addData({'data':this.data}, 'RetailerRequest/update_retailer_request').then((result) => {
+            
+            if(result['statusCode']==200){
+              if(result['statusMsg'] == 'Success'){
+                this.spinner = false
+                this.serve.successToast(result['statusMsg']);
+                this.navCtrl.popTo(LoyaltyPurchaseListPage);
+              }
+              
+            }else{
+              this.spinner = false
+              this.serve.dismissLoading();
+              this.serve.errorToast(result['statusMsg'])
+            }
+          }, err => {
+            this.spinner = false
+            this.serve.dismissLoading();
+            this.serve.errorToast('Something went wrong')
+          });
+          
+          
+        }
+      }
+      
+    ]
+  });
+  alert.present();
+  
+  }
 
 
 

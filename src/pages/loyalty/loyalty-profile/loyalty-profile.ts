@@ -207,7 +207,7 @@ export class LoyaltyProfilePage {
 
   updateProfile() {
     this.karigar_detail.edit_profile = 'edit_profile';
-    this.navCtrl.push(RegistrationPage, { 'data': this.karigar_detail, "mode": 'edit_page' })
+    this.navCtrl.push(RegistrationPage, { 'data': this.karigar_detail, "mode": 'edit_page' ,'state': this.karigar_detail.state, })
   }
 
 

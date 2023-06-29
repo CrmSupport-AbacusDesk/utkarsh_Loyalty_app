@@ -14,7 +14,7 @@
   </div>
   <div class="padding16">
     <div class="image-card">
-      <img src="{{uploadUrl+gift_detail.gift_img}}" *ngIf="gift_detail.gift_type != 'Cash' && !gift_detail.gift_img==''">
+      <img src="{{uploadUrl+gift_detail.gift_img}}" *ngIf="gift_detail.gift_type != 'Cash' && gift_detail.gift_img !=''">
       <img src="assets/imgs/cash.png" alt=""  *ngIf="gift_detail.gift_type == 'Cash'">
       
     </div>
@@ -38,7 +38,7 @@
         
         <ion-item>
           <ion-label floating>{{'Point Value'}}<span>*</span></ion-label>
-          <ion-input type="tel" name="cash_value" #cash_value="ngModel" [(ngModel)]="data.cash_value"></ion-input>
+          <ion-input type="tel" name="cash_value" #cash_value="ngModel" [(ngModel)]="data.cash_value" readonly></ion-input>
         </ion-item>
       </ion-list>
     </div>

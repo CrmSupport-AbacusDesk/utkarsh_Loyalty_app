@@ -1,7 +1,18 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Point History</ion-title>
+
+      <ion-buttons end (click)="statusModal()">
+        <button>
+          <i class="material-icons">date_range</i>
+          </button>
+    </ion-buttons>
+   
+   
+   
   </ion-navbar>
+ 
+ 
   <!-- <ion-toolbar class="custom-toolbar-height">
     <div class="ion-tab-btn ">
       <ion-segment [(ngModel)]="history">
@@ -14,6 +25,9 @@
       </ion-segment>
     </div>
   </ion-toolbar> -->
+
+ 
+ 
 </ion-header>
 
 <ion-content>
