@@ -35,7 +35,7 @@
 </ion-content>
 
 
-<ion-content  class="transprant-bg" *ngIf="this.data.type=='teamreport'">
+<ion-content  class="transprant-bg" *ngIf="from_page=='PointHistory'">
   <div class="work-modal">
     <div class="work-modal-bg">
       <div>
@@ -46,31 +46,19 @@
         </div>
         <div class="edit mt10 ml0 mr0">
           <ion-list>
-            <div>
-              
-              <ion-item class="cs-normal-select" >
-                <ion-label> Select Users <strong>*</strong></ion-label>
-                <ion-select name="users" [(ngModel)]="filter.team_id" >
-                  <ion-option *ngFor="let list of team" [value]="list.id">{{list.name}}</ion-option>
-                  <!-- <ion-option value="two">Palwal</ion-option> -->
-                </ion-select>
-              </ion-item>
-              
+              <h1 style="font-size: 12px;">Date From :</h1>
               <ion-item class="cs-normal-select mt16">
                 <ion-label floating>Date From</ion-label>
-                <ion-input type="date"class="calander" type="date" name="date_to" #date_from="ngModel" [(ngModel)]="filter.date_to" class="calander"  >  <i class="material-icons">date_range</i> </ion-input>
-                
-                
+                <ion-input type="date"class="calander" placeholder="MM/DD/YYYY" type="date" name="date_from" [max]="today_date" #date_from="ngModel" [(ngModel)]="filter.date_from" class="calander" >  <i class="material-icons">date_range</i> </ion-input>
                 
               </ion-item>
+              <h1 style="font-size: 12px;">Date To :</h1>
               <ion-item class="cs-normal-select mt16">
                 <ion-label floating>Date to</ion-label>
-                <ion-input type="date"class="calander" type="date" name="date_from" #date_from="ngModel" [(ngModel)]="filter.date_from" class="calander"  >  <i class="material-icons">date_range</i> </ion-input>
-                
+                <ion-input type="date"class="calander" placeholder="MM/DD/YYYY" type="date" name="date_to" [min]="filter.date_from" [max]="today_date" #date_to="ngModel" [(ngModel)]="filter.date_to" class="calander"  >  <i class="material-icons">date_range</i> </ion-input>
                 
                 
               </ion-item>
-            </div>          
           </ion-list>
           
         </div>
